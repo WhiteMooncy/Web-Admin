@@ -1,22 +1,24 @@
+/* ----------------- Variables ----------------- */
 :root {
-  --negro-profundo: #0D0D0D;
-  --antracita: #2C2C2C;
-  --gris-humo: #4F4F4F;
-  --marfil-calido: #F5F0E6;
-  --vino-oscuro: #4B1E28;
-  --cobre-envejecido: #A9746E;
-  --dorado-clasico: #FFD700; 
-  --dorado-suave: #DAA520;
-  --dorado-metalico: #B8860B; 
+  --color-fondo-terracota: #B47145;
+  --color-tazas-cerceta: #6BA3A7;
+  --color-tazas-malva: #B95F6F;
+  --color-bordes-cafe: #4D382D;
+  --color-azucar-blanco: #FDFBF5;
 }
-/*cuerpo*/
-html{
- scroll-behavior: smooth;
+
+
+/* ----------------- Cuerpo ----------------- */
+html {
+  scroll-behavior: smooth;
 }
-body{
+.login-page{
+  background-image: url("../img/fondocafeteria.webp");
+}
+body {
   margin: 0;
   padding: 0;
-  background-image: url("../img/muro.png");
+  background-image: url("../img/fondocafeteria.webp");
   font-family: 'Poppins', sans-serif;
   width: 100%;
   height: 100%;
@@ -29,6 +31,9 @@ body{
   flex-direction: column;
   min-height: 100vh;
 }
+main{
+  margin-top: 30px;
+}
 /* ----------------- Barra de navegación ----------------- */
 nav {
   position: fixed;
@@ -36,7 +41,7 @@ nav {
   left: 0;
   width: 100%;
   height: 7%;
-  background-color: #0D0D0D;
+  background-color: #48c8ff; /* celestito */
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -56,20 +61,64 @@ nav a:hover {
   color: #FFD700;
 }
 
+.navbar a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar li {
+  margin: 0 15px;
+}
+
+/* Enlace de registrarse e iniciar sesión */
+.register-link, .login-link {
+  margin-top: 10px;
+  cursor: pointer;
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.register-link:hover, .login-link:hover {
+  color: #0056b3;
+}
+
+/* Contenedor del registro, inicialmente oculto a la derecha */
+.register-container {
+  left: 150%; /* Fuera de la pantalla (a la derecha) */
+}
+
+.register-container.active {
+  left: 50%; /* Aparece en la posición central */
+}
+
+/* Contenedor del login, inicialmente visible */
+.login-container.hidden {
+  left: -150%; /* Desplazado fuera de la pantalla (a la izquierda) */
+}
+
 /* ----------------- Contenedores generales ----------------- */
 .container {
   width: 80%;
   margin: 15px auto;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.404);
+  box-shadow: 0px 0px 6px rgba(227, 227, 227, 0.6);
   border-radius: 10px;
 }
+
 #tag-menu, #tag-especiales, #tag-platos, #tag-bebidas {
-  background-color: #21821ee1;
+  background-color: #0056b3;
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.8);
-  
 }
+
 .section {
   padding: 20px;
   border-bottom: 1px solid #000000;
@@ -81,6 +130,54 @@ nav a:hover {
 
 .main-container {
   margin-top: calc(1% + 20px);
+  margin-right: 25%;
+}
+
+/* Contenedor del login y registro */
+.login-container, .register-container {
+  width: 300px;
+  background-color: rgba(226, 226, 226, 0.247); /* Color con opacidad corregido */
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: absolute; /* Para permitir el desplazamiento */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.5s ease-in-out;
+  z-index: 2000;
+}
+
+/* El registro inicia fuera de pantalla a la derecha */
+.register-container {
+  left: 150%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Cuando está activo, aparece en el centro */
+.register-container.active {
+  left: 50%;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* El login está en el centro por defecto */
+.login-container {
+  left: 50%;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Cuando el login está oculto, se va a la izquierda */
+.login-container.hidden {
+  left: -150%;
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* ----------------- Dropdown ----------------- */
@@ -124,6 +221,16 @@ nav a:hover {
   background-color: #f4f4f4;
 }
 
+/* ----------------- Inputs ----------------- */
+input[type="text"], input[type="password"], input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
 /* ----------------- Menú ----------------- */
 .menu-grid {
   display: grid;
@@ -134,14 +241,28 @@ nav a:hover {
 
 @media (min-width: 768px) {
   .menu-grid {
-      grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 .button {
-  background-color: #FFD700; /* --- cambiar --- */
+  background-color: #e7c60a; /* --- cambiar --- */
   border-radius: 15px;
   padding: 5px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #4cae4c; /* Color más oscuro al pasar el mouse */
 }
 
 /* ----------------- Productos ----------------- */
@@ -271,10 +392,6 @@ nav a:hover {
   border-radius: 10px 0 0 10px;
 }
 
-.main-container {
-  margin-right: 25%;
-}
-
 .cart-summary {
   margin-top: 20px;
   text-align: center;
@@ -318,6 +435,7 @@ footer {
   text-align: center;
   background-color: #0D0D0D;
   color: #FFFFFF;
+  margin-top: auto;
 }
 
 .footer .social-media img {
@@ -328,26 +446,25 @@ footer {
 /* ----------------- Responsividad ----------------- */
 @media (max-width: 1024px) {
   .main-container {
-      margin-right: 0;
+    margin-right: 0;
   }
-
   .cart-sidebar {
-      position: relative;
-      width: 100%;
-      height: auto;
-      border-radius: 0;
-      border-top: 2px solid #ccc;
-      padding: 10px;
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-radius: 0;
+    border-top: 2px solid #ccc;
+    padding: 10px;
   }
 }
 
 @media (max-width: 768px) {
   .cart-sidebar {
-      width: 100%;
-      position: relative;
-      border-left: none;
-      border-top: 2px solid #ccc;
-      padding: 10px;
+    width: 100%;
+    position: relative;
+    border-left: none;
+    border-top: 2px solid #ccc;
+    padding: 10px;
   }
 }
 
@@ -404,4 +521,9 @@ footer {
 .carousel-button.next {
   right: 10px;
 }
+
+/* Ejemplo para Style.css */
+.hidden { display: none; }
+.register-container { display: none; }
+.register-container.active { display: block; }
 
