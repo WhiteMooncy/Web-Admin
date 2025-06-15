@@ -1,7 +1,7 @@
 <?php
+require_once '../../backend/php/conexion/db.php';
 session_start();
-?>
-
+php?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,31 +9,32 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../frontend/src/css/Style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    <title>Comprar</title>
+    <title>admin</title>
 </head>
-<header>
-    <div class="navbar-brand">
-        <nav class="navbar">
-            <a href="../templates/index.php">
-                <img src="../../frontend/src/icons/icon_cafe.png" alt="Logo" style="width: 32px; height: 32px; padding: 0; justify-content: center;">  
-            </a>
-            <a href="../templates/carta.php">Carta</a>
-            <details class="dropdown">
-                <summary>Contactanos</summary>
-                <div class="dropdown-menu">
-                    <a href="mailto:MyBuenOscarRestaurant@gmail.com">Correo Electrónico</a>
-                    <a href="tel:+56958917375">Teléfono</a>
-                    <a href="https://wa.me/56958917375" target="_blank">WhatsApp</a>
-                </div>
-            </details>
-            <a href="../../backend/templates/form_login.php" id="cart-link">
-                Login
-            </a>
-        </nav>
-    </div>
-</header>
-<body style="background-image: url(../../frontend/src/img/background_Cafeteria.png);">
-    <div class="main-container">
+<body>
+    <header>
+        <div class="navbar-brand">
+            <nav class="navbar">
+                <a href="../templates/index.php">
+                    <img src="../../frontend/src/icons/icon_cafe.png" alt="Logo" style="width: 32px; height: 32px; padding: 0; justify-content: center;">  
+                </a>
+                <a href="../templates/carta.php">Carta</a>
+                <details class="dropdown">
+                    <summary>Contactanos</summary>
+                    <div class="dropdown-menu">
+                        <a href="mailto:MyBuenOscarRestaurant@gmail.com">Correo Electrónico</a>
+                        <a href="tel:+56958917375">Teléfono</a>
+                        <a href="https://wa.me/56958917375" target="_blank">WhatsApp</a>
+                    </div>
+                </details>
+                <a href="../../backend/templates/form_login.php" id="cart-link">
+                    Login
+                </a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="main-container">
         <div class="menu-columns">
             <div class="container">
                 <div id="tag-especiales" class="container">
@@ -51,6 +52,7 @@ session_start();
                             </div>
                             <img src="../../frontend/src/img/thumb.jpg" alt="etc">
                         </div>
+                    </div>
                 </div>
                 <div id="tag-platos" class="container">
                     <h1>Cafes</h1>
@@ -79,7 +81,7 @@ session_start();
                 <div id="tag-bebidas" class="container">
                     <h1>etc</h1>
                 </div>
-                <div id="menu" class="section" >
+                <div id="menu" class="section">
                     <div class="menu-grid">
                         <div class="item">
                             <div class="item-info">
@@ -94,8 +96,10 @@ session_start();
                 </div>
             </div>
         </div>
-        <!-- Aside -->
-        <aside class="cart-sidebar" id="cart">
+    </div>
+    </main>
+<!-- Aside -->
+    <aside class="cart-sidebar" id="cart">
             <section>
                 <h2>Tu Carrito (<span id="cart-count"><?php echo isset($_SESSION['carrito']) && is_array($_SESSION['carrito']) ? count($_SESSION['carrito']) : 0; ?></span>)</h2>
                 <div class="cart-location">
@@ -132,12 +136,11 @@ session_start();
                 }
                 ?>
             </div>
-                        <div class="cart-summary">
-                            <p>Subtotal: <span class="cart-subtotal">$<?php echo number_format($total); ?></span></p>
-                            <button class="cart-continue-btn" onclick="continuarCompra()">Continuar</button>
-                        </div>
-            </aside>
-    </div>
+            <div class="cart-summary">
+                <p>Subtotal: <span class="cart-subtotal">$<?php echo number_format($total); ?></span></p>
+                <button class="cart-continue-btn" onclick="continuarCompra()">Continuar</button>
+            </div>
+    </aside>
 </body>
 <footer class="footer">
     <p>Ubicación: Chile <br>Teléfono: +56 9 5891 7375</p>
@@ -145,13 +148,13 @@ session_start();
         <div>
             <p class="social-media">
                 <a href="https://www.facebook.com" target="_blank" aria-label="Facebook">
-                    <img src="../src/icons/facebook-icon.png" alt="Facebook" style="width: 32px; margin: 0 10px;">
+                    <img src="../../frontend/src/icons/facebook-icon.png" alt="Facebook" style="width: 32px; margin: 0 10px;">
                 </a>
                 <a href="https://www.instagram.com" target="_blank" aria-label="Instagram">
-                    <img src="../src/icons/instagram-icon.png" alt="Instagram" style="width: 32px; margin: 0 10px;">
+                    <img src="../../frontend/src/icons/instagram-icon.png" alt="Instagram" style="width: 32px; margin: 0 10px;">
                 </a>
                 <a href="https://www.twitter.com" target="_blank" aria-label="Twitter">
-                    <img src="../src/icons/twitter-icon.png" alt="Twitter" style="width: 32px; margin: 0 10px;">
+                    <img src="../../frontend/src/icons/twitter-icon.png" alt="Twitter" style="width: 32px; margin: 0 10px;">
                 </a>
             </p>
         </div>

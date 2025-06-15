@@ -12,13 +12,10 @@
 html {
   scroll-behavior: smooth;
 }
-.login-page{
-  background-image: url("../img/fondocafeteria.webp");
-}
 body {
   margin: 0;
   padding: 0;
-  background-image: url("../img/fondocafeteria.webp");
+  background-image: url("../img/background_Cafeteria.png");
   font-family: 'Poppins', sans-serif;
   width: 100%;
   height: 100%;
@@ -461,10 +458,12 @@ footer {
 @media (max-width: 768px) {
   .cart-sidebar {
     width: 100%;
-    position: relative;
-    border-left: none;
-    border-top: 2px solid #ccc;
-    padding: 10px;
+    position: static;
+    box-shadow: none;
+  }
+  .cart-item {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
@@ -526,4 +525,81 @@ footer {
 .hidden { display: none; }
 .register-container { display: none; }
 .register-container.active { display: block; }
+/* ----------------- Barra de navegación vertical para dashboard ----------------- */
+.dashboard-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 100vh;
+  background-color: #48c8ff; /* celestito */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 30px;
+  box-shadow: 2px 0 8px 0 rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+  gap: 10px;
+}
+
+.dashboard-navbar a {
+  color: #F5F0E6;
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 12px 25px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background 0.2s, color 0.2s;
+  border-radius: 0 20px 20px 0;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.dashboard-navbar a:hover {
+  background: #FFD700;
+  color: #222;
+}
+
+.dashboard-navbar #logo {
+  padding: 0 25px 20px 25px;
+  margin-bottom: 20px;
+  background: none;
+}
+
+.dashboard-navbar #logo img {
+  width: 120px;
+  height: auto;
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* Ajuste para el contenido principal cuando la barra está fija */
+.dashboard-main {
+  margin-left: 220px;
+  padding: 30px 20px 20px 20px;
+}
+
+/* Responsive para pantallas chicas */
+@media (max-width: 700px) {
+  .dashboard-navbar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 0;
+    box-shadow: none;
+    gap: 0;
+  }
+  .dashboard-navbar a, .dashboard-navbar #logo {
+    padding: 10px 10px;
+    margin-bottom: 0;
+    border-radius: 10px;
+    font-size: 1rem;
+  }
+  .dashboard-main {
+    margin-left: 0;
+    padding: 15px 5px;
+  }
+}
 

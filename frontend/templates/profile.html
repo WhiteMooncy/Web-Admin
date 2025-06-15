@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../frontend/src/css/styleDashboard.css">
+    <title>Cafetería | Dashboard</title>
+</head>
+<body>
+    <div class="container-layout">
+        <header>
+            <h2>Mi Perfil</h1>            
+        </header>
+        <aside>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="../dashboard.php">Inicio</a></li>
+                        <li><a href="../templates/admin/manage_users.php">Usuarios</a></li>
+                        <li><a href="../templates/admin/orders.php">Pedidos</a></li>
+                        <li><a href="../templates/admin/products.php">Productos</a></li>
+                        <li><a href="../templates/admin/reports.php">Reportes</a></li>
+                        <li><a href="../templates/admin/settings.php" class="active">Mi Perfil</a></li>
+                    <li><a href="../../backend/php/conexion/logout.php">Cerrar Sesión</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main>
+          <section class="profile-card" style="max-width:350px;margin:auto;padding:2rem;border-radius:10px;box-shadow:0 2px 8px #ccc;text-align:center;">
+            <img src="../src/css/240_F_553796090_XHrE6R9jwmBJUMo9HKl41hyHJ5gqt9oz.jpg" alt="Foto de perfil" style="width:100px;height:100px;border-radius:50%;object-fit:cover;margin-bottom:1rem;">
+            <div id="profile-data">
+              <h2 id="nombre">Mateo</h2>
+              <h3 id="apellido">Villablanca</h3>
+              <p id="usuario">Usuario: MateoADMIN</p>
+              <p id="rol">Rol: Administrador</p>
+              <p id="telefono">Teléfono: 999999999</p>
+              <p id="correo">Correo: admincafeteria@email.com</p>
+            </div>
+            <form id="edit-form" style="display:none;">
+              <input type="text" id="edit-nombre" value="Juan" required placeholder="Nombre"><br>
+              <input type="text" id="edit-apellido" value="Pérez" required placeholder="Apellido"><br>
+              <input type="text" id="edit-usuario" value="juanperez" required placeholder="Usuario ENSI"><br>
+              <input type="text" id="edit-rol" value="Administrador" required placeholder="Rol"><br>
+              <input type="tel" id="edit-telefono" value="555-123-4567" required placeholder="Teléfono"><br>
+              <input type="email" id="edit-correo" value="juan.perez@email.com" required placeholder="Correo"><br>
+            </form>
+            <button id="edit-btn" onclick="toggleEdit()">Editar</button>
+          </section>
+          <script>
+            function toggleEdit() {
+              const data = document.getElementById('profile-data');
+              const form = document.getElementById('edit-form');
+              const btn = document.getElementById('edit-btn');
+              if (form.style.display === 'none') {
+                // Mostrar formulario para editar
+                form.style.display = 'block';
+                data.style.display = 'none';
+                btn.textContent = 'Guardar';
+              } else {
+                // Guardar cambios y mostrar datos
+                document.getElementById('nombre').textContent = document.getElementById('edit-nombre').value;
+                document.getElementById('apellido').textContent = document.getElementById('edit-apellido').value;
+                document.getElementById('usuario').textContent = 'Usuario ENSI: ' + document.getElementById('edit-usuario').value;
+                document.getElementById('rol').textContent = 'Rol: ' + document.getElementById('edit-rol').value;
+                document.getElementById('telefono').textContent = 'Teléfono: ' + document.getElementById('edit-telefono').value;
+                document.getElementById('correo').textContent = 'Correo: ' + document.getElementById('edit-correo').value;
+                form.style.display = 'none';
+                data.style.display = 'block';
+                btn.textContent = 'Editar';
+              }
+            }
+          </script>
+        </main>
+        <footer>
+            © 2025 - Cafetería
+        </footer>
+    </div>
+</body>
+</html>

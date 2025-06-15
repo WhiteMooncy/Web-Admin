@@ -1,5 +1,5 @@
 <?php
-require_once '../../backend/php/db.php';
+require_once '../../backend/php/conexion/db.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">

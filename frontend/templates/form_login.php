@@ -1,6 +1,6 @@
 <?php
-require_once '../../backend/php/db.php';
-
+require_once '../../backend/php/conexion/db.php';
+session_start(); 
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -12,13 +12,20 @@ require_once '../../backend/php/db.php';
 </head>
 <body style="background-image: url(../../frontend/src/img/background_Cafeteria.png)">
     <nav class="navbar">
-        <a href="../templates/index.php" class="navbar-brand">
+        <a href="index.php" class="navbar-brand">
             <img src="../../frontend/src/icons/icon_cafe.png" alt="Logo"> Inicio
         </a>
     </nav>
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
-        <form method="post" action="../../backend/php/login.php">
+        <?php
+        // Display login error message if set
+        if (isset($_SESSION['login_error'])) {
+            echo '<p style="color: red; text-align: center;">' . $_SESSION['login_error'] . '</p>';
+            unset($_SESSION['login_error']); // Clear the error after displaying
+        }
+        ?>
+        <form method="post" action="../../backend/php/conexion/login.php">
             <label for="username">Nombre de Usuario:</label>
             <input type="text" name="username" id="username" required>
 

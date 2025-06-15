@@ -1,4 +1,7 @@
 # Web-Admin
+
+cliente 
+entra a la pagina principal y tiene acceso a carta y a login dentro de esto puede ver la carta pero a momento de comprar tiene la opcion crear cuenta/inisiar sesion y compra a pedido el cual no nesecita de cuenta pero sin de algunos datos para el retiro
 <-----------Funcionalidades Detalladas----------->
 
 Registro de Usuarios:
