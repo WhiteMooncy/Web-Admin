@@ -15,10 +15,11 @@ require_once '../../backend/php/conexion/check_role.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../frontend/src/css/styleDashboard.css">
+    <link rel="stylesheet" href="../../frontend/src/css/styleDashboard.css?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <title>Cafetería | Dashboard</title>
 </head>
-<body>
+<body id="dash-board">
     <div class="container-layout">
         <header>
             <h1>Bienvenido al Dashboard</h1>            
@@ -27,14 +28,14 @@ require_once '../../backend/php/conexion/check_role.php';
         <aside>
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="../dashboard.php" class="active">Inicio</a></li>
+                    <li><a href="../templates/dashboard.php" class="active">Inicio</a></li>
 
                     <?php if ($user_role_name === 'admin'): // Funciones solo para administradores ?>
                         <li><a href="../templates/admin/manage_users.php">Usuarios</a></li>
                         <li><a href="../templates/admin/orders.php">Pedidos</a></li>
                         <li><a href="../templates/admin/products.php">Productos</a></li>
                         <li><a href="../templates/admin/reports.php">Reportes</a></li>
-                        <li><a href="../templates/admin/settings.php">Mi Perfil</a></li>
+                        <li><a href="../templates/profile.php">Mi Perfil</a></li>
                     <?php endif; ?>
 
                     <?php if ($user_role_name === 'empleado'): // Funciones para administradores y empleados ?>

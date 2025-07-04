@@ -30,135 +30,137 @@ if ($user_role_name === 'admin' || $user_role_name === 'empleado' || $user_role_
 ?>
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Pedidos | Cafetería</title>
-    <link rel="stylesheet" href="../../../frontend/src/css/styleDashboard.css">
-    <!-- SweetAlert2 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<body>
-    <div class="container-layout">
-        <header>
-            <h1>Listado de Pedidos</h1>
-            <h6>¡Bienvenido <?php echo ucfirst(htmlspecialchars($user_role_name)); ?> <?php echo htmlspecialchars($username); ?>!</h6>
-        </header>
-        <aside>
-            <nav class="sidebar-nav">
-                <ul>
-                    <li><a href="../dashboard.php">Inicio</a></li>
-
-                    <?php if ($user_role_name === 'admin'): // Funciones solo para administradores ?>
-                        <li><a href="../admin/manage_users.php">Usuarios</a></li>
-                        <li><a href="../admin/orders.php" class="active">Pedidos</a></li>
-                        <li><a href="../admin/products.php">Productos</a></li>
-                        <li><a href="../admin/reports.php">Reportes</a></li>
-                        <li><a href="../admin/settings.php">Configuración</a></li>
-                    <?php endif; ?>
-
-                    <?php if ($user_role_name === 'empleado'): // Funciones para administradores y empleados ?>
-                        <li><a href="orders.php" class="active">Pedidos</a></li>
-                        <li><a href="../admin/products.php">Productos</a></li>
-                        <li><a href="../admin/reports.php">Reportes</a></li>
-                        <li><a href="../admin/settings.php">Mi Perfil</a></li>
-                    <?php endif; ?>
-
-                    <?php if ($user_role_name === 'cliente'): // Funciones solo para clientes ?>
-                        <li><a href="../admin/orders.php">Comprar</a></li>
-                        <li><a href="../admin/orders.php" class="active">Mis Pedidos</a></li>
-                        <li><a href="../profile.php">Mi Perfil</a></li>
-                    <?php endif; ?>
-
-                    <li><a href="../../../backend/php/conexion/logout.php">Cerrar Sesión</a></li>
-                </ul>
-            </nav>
-        </aside>
-        <main>
-            <div class="pedidos-container">
+    <head>
+        <meta charset="UTF-8">
+        <title>Pedidos | Cafetería</title>
+        <link rel="stylesheet" href="../../../frontend/src/css/styleDashboard.css?v=2">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+        <!-- SweetAlert2 CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    </head>
+    <body id="dash-board">
+        <div class="container-layout">
+            <header>
                 <h1>Listado de Pedidos</h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID Pedido</th>
-                            <th>Usuario</th>
-                            <th>Fecha</th>
-                            <th>Estado</th>
-                            <th>Total</th>
-                            <?php if ($user_role_name === 'admin' || $user_role_name === 'empleado'): ?>
-                                <th>Acciones</th>
-                            <?php endif; ?>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if ($result && $result->num_rows > 0): ?>
-                            <?php while($row = $result->fetch_assoc()): ?>
-                                <tr>
-                                    <td><?php echo htmlspecialchars($row['ID_Pedido']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['username']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['fecha']); ?></td>
-                                    <td>
-                                        <?php
-                                        $estado = strtolower($row['estado']);
-                                        $clase = '';
-                                        if ($estado == 'pendiente') $clase = 'pendiente';
-                                        elseif ($estado == 'completado') $clase = 'completado';
-                                        elseif ($estado == 'cancelado') $clase = 'cancelado';
-                                        ?>
-                                        <span class="estado <?php echo $clase; ?>">
-                                            <?php echo ucfirst($estado); ?>
-                                        </span>
-                                    </td>
-                                    <td>$<?php echo number_format($row['total'], 0, ',', '.'); ?></td>
-                                    <?php if ($user_role_name === 'admin' || $user_role_name === 'empleado'): ?>
-                                        <td>
-                                            <form action="../../../backend/php/funcions/cambiar_estado_pedido.php" method="POST">
-                                                <input type="hidden" name="ID_Pedido" value="<?php echo htmlspecialchars($row['ID_Pedido']); ?>">
-                                                <select name="estado">
-                                                    <option value="pendiente" <?php if($estado == 'pendiente') echo 'selected'; ?>>Pendiente</option>
-                                                    <option value="en preparacion" <?php if($estado == 'en preparacion') echo 'selected'; ?>>En preparación</option>
-                                                    <option value="listo" <?php if($estado == 'listo') echo 'selected'; ?>>Listo</option>
-                                                    <option value="entregado" <?php if($estado == 'entregado') echo 'selected'; ?>>Entregado</option>
-                                                    <option value="cancelado" <?php if($estado == 'cancelado') echo 'selected'; ?>>Cancelado</option>
-                                                </select>
-                                                <button type="submit">Cambiar estado</button>
-                                            </form>
-                                        </td>
-                                    <?php endif; ?>
-                                </tr>
-                            <?php endwhile; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="5">No hay pedidos registrados.</td>
-                            </tr>
+                <h6>¡Bienvenido <?php echo ucfirst(htmlspecialchars($user_role_name)); ?> <?php echo htmlspecialchars($username); ?>! aqui podras ver los pedidos realizados y su estado</h6>
+            </header>
+            <aside>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><a href="../dashboard.php">Inicio</a></li>
+
+                        <?php if ($user_role_name === 'admin'): // Funciones solo para administradores ?>
+                            <li><a href="../admin/manage_users.php">Usuarios</a></li>
+                            <li><a href="../admin/orders.php" class="active">Pedidos</a></li>
+                            <li><a href="../admin/products.php">Productos</a></li>
+                            <li><a href="../admin/reports.php">Reportes</a></li>
+                            <li><a href="../templates/admin/settings.php">Mi Perfil</a></li>
                         <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
-        </main>    
-    </div>
-    <footer>
-        © 2025 - Cafetería
-    </footer>
-<?php if (isset($_GET['msg'])): ?>
-<script>
-    <?php if ($_GET['msg'] === 'actualizado'): ?>
-    Swal.fire({
-        icon: 'success',
-        title: '¡Éxito!',
-        text: 'Estado actualizado',
-        confirmButtonColor: '#3085d6'
-    });
-    <?php elseif ($_GET['msg'] === 'error'): ?>
-    Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Error al actualizar el estado',
-        confirmButtonColor: '#d33'
-    });
-    <?php endif; ?>
-</script>
-<?php endif; ?>
-</body>
+
+                        <?php if ($user_role_name === 'empleado'): // Funciones para administradores y empleados ?>
+                            <li><a href="orders.php" class="active">Pedidos</a></li>
+                            <li><a href="../admin/products.php">Productos</a></li>
+                            <li><a href="../admin/reports.php">Reportes</a></li>
+                            <li><a href="../admin/settings.php">Mi Perfil</a></li>
+                        <?php endif; ?>
+
+                        <?php if ($user_role_name === 'cliente'): // Funciones solo para clientes ?>
+                            <li><a href="../admin/orders.php">Comprar</a></li>
+                            <li><a href="../admin/orders.php" class="active">Mis Pedidos</a></li>
+                            <li><a href="../profile.php">Mi Perfil</a></li>
+                        <?php endif; ?>
+
+                        <li><a href="../../../backend/php/conexion/logout.php">Cerrar Sesión</a></li>
+                    </ul>
+                </nav>
+            </aside>
+            <main>
+                <div class="pedidos-container">
+                    <h1>Listado de Pedidos</h1>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID Pedido</th>
+                                <th>Usuario</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th>Total</th>
+                                <?php if ($user_role_name === 'admin' || $user_role_name === 'empleado'): ?>
+                                    <th>Acciones</th>
+                                <?php endif; ?>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($result && $result->num_rows > 0): ?>
+                                <?php while($row = $result->fetch_assoc()): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($row['ID_Pedido']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['username']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['fecha']); ?></td>
+                                        <td>
+                                            <?php
+                                            $estado = strtolower($row['estado']);
+                                            $clase = '';
+                                            if ($estado == 'pendiente') $clase = 'pendiente';
+                                            elseif ($estado == 'completado') $clase = 'completado';
+                                            elseif ($estado == 'cancelado') $clase = 'cancelado';
+                                            ?>
+                                            <span class="estado <?php echo $clase; ?>">
+                                                <?php echo ucfirst($estado); ?>
+                                            </span>
+                                        </td>
+                                        <td>$<?php echo number_format($row['total'], 0, ',', '.'); ?></td>
+                                        <?php if ($user_role_name === 'admin' || $user_role_name === 'empleado'): ?>
+                                            <td>
+                                                <form action="../../../backend/php/funcions/cambiar_estado_pedido.php" method="POST">
+                                                    <input type="hidden" name="ID_Pedido" value="<?php echo htmlspecialchars($row['ID_Pedido']); ?>">
+                                                    <select class="estado" name="estado">
+                                                        <option value="pendiente" <?php if($estado == 'pendiente') echo 'selected'; ?>>Pendiente</option>
+                                                        <option value="en preparacion" <?php if($estado == 'en preparacion') echo 'selected'; ?>>En preparación</option>
+                                                        <option value="listo" <?php if($estado == 'listo') echo 'selected'; ?>>Listo</option>
+                                                        <option value="entregado" <?php if($estado == 'entregado') echo 'selected'; ?>>Entregado</option>
+                                                        <option value="cancelado" <?php if($estado == 'cancelado') echo 'selected'; ?>>Cancelado</option>
+                                                    </select>
+                                                    <button type="submit">Cambiar estado</button>
+                                                </form>
+                                            </td>
+                                        <?php endif; ?>
+                                    </tr>
+                                <?php endwhile; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="5">No hay pedidos registrados.</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </main>  
+            <footer>
+                © 2025 - Cafetería
+            </footer>  
+        </div>
+        <?php if (isset($_GET['msg'])): ?>
+            <script>
+                <?php if ($_GET['msg'] === 'actualizado'): ?>
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Éxito!',
+                    text: 'Estado actualizado',
+                    confirmButtonColor: '#3085d6'
+                });
+                <?php elseif ($_GET['msg'] === 'error'): ?>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al actualizar el estado',
+                    confirmButtonColor: '#d33'
+                });
+                <?php endif; ?>
+                
+            </script>
+        <?php endif; ?>
+    </body>
 </html>
 <?php
 if (isset($result) && $result instanceof mysqli_result) {

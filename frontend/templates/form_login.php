@@ -3,14 +3,14 @@ require_once '../../backend/php/conexion/db.php';
 session_start(); 
 ?>
 <!DOCTYPE html>
-<html lang="es">
+<html id="login-page" lang="es" >
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../../frontend/src/css/styleDashboard.css">
+        <link rel="stylesheet" href="../../frontend/src/css/styleDashboard.css?v=2">
         <title>Iniciar Sesión</title>
     </head>
-    <body id="login-page">
+    <body>
         <nav class="navbar">
             <a href="index.php" class="navbar-brand">
                 <img src="../../frontend/src/icons/icon_cafe.png" alt="Logo"> Inicio
