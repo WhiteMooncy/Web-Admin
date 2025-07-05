@@ -1,22 +1,15 @@
 <?php
-require_once '../../backend/php/conexion/check_role.php';
-
-// A partir de aquí, las variables $user_role_name y $user_role_id ya están disponibles,
-// y el usuario ya habrá sido redirigido si no está logueado.
-// La conexión $conn también estará abierta y disponible si necesitas hacer más consultas.
-
-// Opcional: Ahora podrías cerrar la conexión si no la usarás más en esta página.
-// if (isset($conn)) {
-//     $conn->close();
-// }
+require_once '../../../backend/php/conexion/check_role.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../frontend/src/css/styleDashboard.css?v=2">
+    <link rel="stylesheet" href="../../src/css/styleDashboard.css?v=2">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../src/js/logout-confirm.js"></script>
     <title>Cafetería | Dashboard</title>
 </head>
 <body id="dash-board">
@@ -28,30 +21,30 @@ require_once '../../backend/php/conexion/check_role.php';
         <aside>
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="../templates/dashboard.php" class="active">Inicio</a></li>
+                    <li><a href="../loged/dashboard.php" class="active">Inicio</a></li>
 
                     <?php if ($user_role_name === 'admin'): // Funciones solo para administradores ?>
-                        <li><a href="../templates/admin/manage_users.php">Usuarios</a></li>
-                        <li><a href="../templates/admin/orders.php">Pedidos</a></li>
-                        <li><a href="../templates/admin/products.php">Productos</a></li>
-                        <li><a href="../templates/admin/reports.php">Reportes</a></li>
-                        <li><a href="../templates/profile.php">Mi Perfil</a></li>
+                        <li><a href="../loged/manage_users.php">Usuarios</a></li>
+                        <li><a href="../loged/orders.php">Pedidos</a></li>
+                        <li><a href="../loged/products.php">Productos</a></li>
+                        <li><a href="../loged/reports.php">Reportes</a></li>
+                        <li><a href="../loged/profile.php">Mi Perfil</a></li>
                     <?php endif; ?>
 
                     <?php if ($user_role_name === 'empleado'): // Funciones para administradores y empleados ?>
-                        <li><a href="../templates/admin/orders.php">Pedidos</a></li>
-                        <li><a href="../templates/admin/products.php">Productos</a></li>
-                        <li><a href="../templates/admin/reports.php">Reportes</a></li>
-                        <li><a href="../templates/admin/settings.php">Mi Perfil</a></li>
+                        <li><a href="../loged/orders.php">Pedidos</a></li>
+                        <li><a href="../loged/products.php">Productos</a></li>
+                        <li><a href="../loged/reports.php">Reportes</a></li>
+                        <li><a href="../loged/profile.php">Mi Perfil</a></li>
                     <?php endif; ?>
 
                     <?php if ($user_role_name === 'cliente'): // Funciones solo para clientes ?>
-                        <li><a href="../templates/admin/orders.php">Comprar</a></li>
-                        <li><a href="../templates/admin/orders.php">Mis Pedidos</a></li>
-                        <li><a href="profile.php">Mi Perfil</a></li>
+                        <li><a href="../carta.php">Comprar</a></li>
+                        <li><a href="../loged/orders.php">Mis Pedidos</a></li>
+                        <li><a href="../loged/profile.php">Mi Perfil</a></li>
                     <?php endif; ?>
 
-                    <li><a href="../../backend/php/conexion/logout.php">Cerrar Sesión</a></li>
+                    <li><a href="../../../backend/php/conexion/logout.php" id="logout-link">Cerrar Sesión</a></li>
                 </ul>
             </nav>
         </aside>

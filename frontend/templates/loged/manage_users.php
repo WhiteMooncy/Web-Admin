@@ -7,8 +7,10 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../frontend/src/css/styleDashboard.css?v=2">
+    <link rel="stylesheet" href="../../src/css/styleDashboard.css?v=2">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../src/js/logout-confirm.js"></script>
     <title>Cafetería | Administración de Usuarios</title>
 </head>
 <body id="dash-board">
@@ -19,13 +21,13 @@ session_start();
         <aside>
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="../dashboard.php">Inicio</a></li>
-                    <li><a href="../admin/manage_users.php" class="active">Usuarios</a></li>
-                    <li><a href="../admin/orders.php">Pedidos</a></li>
-                    <li><a href="../admin/products.php">Productos</a></li>
-                    <li><a href="../admin/reports.php">Reportes</a></li>
-                    <li><a href="../admin/settings.php">Perfil</a></li>
-                    <li><a href="../../../backend/php/conexion/logout.php">Cerrar Sesión</a></li>
+                    <li><a href="../loged/dashboard.php">Inicio</a></li>
+                        <li><a href="../loged/manage_users.php" class="active">Usuarios</a></li>
+                        <li><a href="../loged/orders.php">Pedidos</a></li>
+                        <li><a href="../loged/products.php">Productos</a></li>
+                        <li><a href="../loged/reports.php">Reportes</a></li>
+                        <li><a href="../loged/profile.php">Mi Perfil</a></li>
+                        <li><a href="../../../backend/php/conexion/logout.php" id="logout-link">Cerrar Sesión</a></li>
                 </ul>
             </nav>
         </aside>

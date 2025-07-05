@@ -7,7 +7,7 @@ php?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../frontend/src/css/Style.css">
+    <link rel="stylesheet" href="../../src/css/styleDashboard.css?v=2">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <title>admin</title>
 </head>

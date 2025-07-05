@@ -133,6 +133,43 @@ body#index-page
         .carousel-button.next {
         right: 10px;
         }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown summary {
+            cursor: pointer;
+            list-style: none;
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: rgba(5, 5, 5, 0.884); 
+            min-width: 200px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .dropdown[open] .dropdown-menu {
+            display: block;
+        }
+        .dropdown-menu a {
+            color: #222; 
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+        }
+        .dropdown-menu a:hover {
+            background-color: #424040b2;
+            color: #000000; 
+        }
 body#login-page
         .register-link, .login-link {
             margin-top: 10px;
@@ -145,7 +182,7 @@ body#login-page
         }
         .login-container, .register-container {
             width: 300px;
-            background-color: rgba(255, 255, 255, 0.788); /* Color con opacidad corregido */
+            background-color: rgba(255, 255, 255, 0.788);
             padding: 20px;
             border-radius: 20px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
@@ -192,7 +229,7 @@ body#login-page
             border-radius: 5px;
             cursor: pointer;
         }
-        input[type="text"], input[type="password"], input[type="email"] {
+        input[type="text"], input[type="password"], input[type="email"], input[type="tel"] {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -211,7 +248,8 @@ body#dash-board
             grid-template-rows: auto 1fr auto;
             min-height: 100vh;
             gap: 20px;
-            max-width: 1200px;
+            width: 95%;
+            max-width: none;
             margin: 0 auto;
             padding: 20px 0;
         }
@@ -237,6 +275,8 @@ body#dash-board
             display: flex;
             flex-direction: column;
             align-items: stretch;
+            width: 220px;
+            height: 430px;
         }
         .sidebar-nav {
             width: 100%;
@@ -358,8 +398,8 @@ RESPONSIVE
         }
 
         /* Botones personalizados para cafetería */
-        .btn-add-user, .btn-success {
-            background: #f5cb0e;
+        .btn-add-user, .btn-success, .btn-add-product {
+            background: #0e7af5;
             color: #fff;
             border: none;
             padding: 10px 22px;
@@ -375,33 +415,44 @@ RESPONSIVE
             box-shadow: 0 4px 16px #0002;
         }
         .btn-edit {
+            font-size: 0.9rem;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: inline-block;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 8px #0001;
+            margin: 2px 0;
+            text-transform: capitalize;
             background: #2daf34;
             color: #fff;
             border: none;
-            padding: 6px 16px;
-            border-radius: 4px;
             margin-right: 6px;
             cursor: pointer;
             font-weight: 500;
             transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-            box-shadow: 0 1px 4px #0001;
-            font-size: 1rem;
         }
         .btn-edit:hover {
             background: #256029;
             box-shadow: 0 2px 8px #0002;
         }
         .btn-delete, .btn-close {
-            background: #c62828;
+            font-size: 0.9rem;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: inline-block;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 8px #0001;
+            margin: 2px 0;
+            text-transform: capitalize;
+            background: #e02e2e;
             color: #fff;
             border: none;
-            padding: 6px 16px;
-            border-radius: 4px;
+            margin-right: 6px;
             cursor: pointer;
             font-weight: 500;
             transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-            box-shadow: 0 1px 4px #0001;
-            font-size: 1rem;
         }
         .btn-delete:hover, .btn-close:hover {
             background: #8e0000;

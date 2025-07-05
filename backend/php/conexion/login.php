@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar que ambas entradas existan y no estén vacías
     if (empty($username) || empty($password)) {
         $_SESSION['login_error'] = "Por favor, complete ambos campos.";
-        header("Location: ../../../frontend/templates/form_login.php");
+        header("Location: ../../../frontend/templates/loged/form_login.php");
         exit;
     }
 
@@ -43,23 +43,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_role_name'] = strtolower($user['rol_nombre']); // Siempre en minúsculas
 
             // Redirigir al dashboard
-            header("Location: ../../../frontend/templates/dashboard.php");
+            header("Location: ../../../frontend/templates/loged/dashboard.php");
             exit;
         } else {
             $_SESSION['login_error'] = "Usuario o contraseña incorrectos.";
-            header("Location: ../../../frontend/templates/form_login.php");
+            header("Location: ../../../frontend/templates/loged/form_login.php");
             exit;
         }
     } else {
         $_SESSION['login_error'] = "Usuario o contraseña incorrectos.";
-        header("Location: ../../../frontend/templates/form_login.php");
+        header("Location: ../../../frontend/templates/loged/form_login.php");
         exit;
     }
 
     $stmt->close();
 } else {
     // Si no se accedió por POST, redirigir al formulario de login
-    header("Location: ../../../frontend/templates/form_login.php");
+    header("Location: ../../../frontend/templates/loged/form_login.php");
     exit;
 }
 

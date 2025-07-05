@@ -1,5 +1,5 @@
 <?php
-require_once '../../backend/php/conexion/db.php';
+require_once '../../../backend/php/conexion/db.php';
 session_start(); 
 ?>
 <!DOCTYPE html>
@@ -7,13 +7,13 @@ session_start();
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../../frontend/src/css/styleDashboard.css?v=2">
+        <link rel="stylesheet" href="../../src/css/styleDashboard.css?v=2">
         <title>Iniciar Sesión</title>
     </head>
     <body>
         <nav class="navbar">
             <a href="index.php" class="navbar-brand">
-                <img src="../../frontend/src/icons/icon_cafe.png" alt="Logo"> Inicio
+                <img src="../../src/icons/icon_cafe.png" alt="Logo"> Inicio
             </a>
         </nav>
         <div class="login-container">
@@ -25,7 +25,7 @@ session_start();
                 unset($_SESSION['login_error']); // Clear the error after displaying
             }
             ?>
-            <form method="post" action="../../backend/php/conexion/login.php">
+            <form method="post" action="../../../backend/php/conexion/login.php">
                 <label for="username">Nombre de Usuario:</label>
                 <input type="text" name="username" id="username" required>
 

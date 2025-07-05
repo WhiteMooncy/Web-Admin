@@ -31,6 +31,7 @@ $notifications = [
 <head>
     <meta charset="UTF-8">
     <title>Panel de Notificaciones - Admin</title>
+    <link rel="stylesheet" href="../../src/css/styleDashboard.css?v=2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         body {

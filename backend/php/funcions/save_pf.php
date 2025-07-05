@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../../../backend/php/conexion/db.php';
+require_once '../conexion/db.php';
 
 // Validar que el usuario esté autenticado
 if (!isset($_SESSION['ID_Usuario'])) {
@@ -39,10 +39,10 @@ if ($stmt->execute()) {
     $_SESSION['telefono'] = $telefono;
     $_SESSION['correo'] = $correo;
 
-    header('Location: ../../../frontend/templates/profile.php?success=1');
+    header('Location: ../../../frontend/templates/loged/profile.php?success=1');
     exit;
 } else {
-    header('Location: ../../../frontend/templates/profile.php?error=1');
+    header('Location: ../../../frontend/templates/loged/profile.php?error=1');
     exit;
 }
 ?>

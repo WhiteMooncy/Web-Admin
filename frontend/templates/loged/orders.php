@@ -33,10 +33,11 @@ if ($user_role_name === 'admin' || $user_role_name === 'empleado' || $user_role_
     <head>
         <meta charset="UTF-8">
         <title>Pedidos | Cafetería</title>
-        <link rel="stylesheet" href="../../../frontend/src/css/styleDashboard.css?v=2">
+        <link rel="stylesheet" href="../../src/css/styleDashboard.css?v=2">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
         <!-- SweetAlert2 CDN -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="../../src/js/logout-confirm.js"></script>
     </head>
     <body id="dash-board">
         <div class="container-layout">
@@ -47,30 +48,30 @@ if ($user_role_name === 'admin' || $user_role_name === 'empleado' || $user_role_
             <aside>
                 <nav class="sidebar-nav">
                     <ul>
-                        <li><a href="../dashboard.php">Inicio</a></li>
+                        <li><a href="../loged/dashboard.php">Inicio</a></li>
 
                         <?php if ($user_role_name === 'admin'): // Funciones solo para administradores ?>
-                            <li><a href="../admin/manage_users.php">Usuarios</a></li>
-                            <li><a href="../admin/orders.php" class="active">Pedidos</a></li>
-                            <li><a href="../admin/products.php">Productos</a></li>
-                            <li><a href="../admin/reports.php">Reportes</a></li>
-                            <li><a href="../templates/admin/settings.php">Mi Perfil</a></li>
+                            <li><a href="../loged/manage_users.php">Usuarios</a></li>
+                            <li><a href="../loged/orders.php" class="active">Pedidos</a></li>
+                            <li><a href="../loged/products.php">Productos</a></li>
+                            <li><a href="../loged/reports.php">Reportes</a></li>
+                            <li><a href="../loged/profile.php">Mi Perfil</a></li>
                         <?php endif; ?>
 
                         <?php if ($user_role_name === 'empleado'): // Funciones para administradores y empleados ?>
-                            <li><a href="orders.php" class="active">Pedidos</a></li>
-                            <li><a href="../admin/products.php">Productos</a></li>
-                            <li><a href="../admin/reports.php">Reportes</a></li>
-                            <li><a href="../admin/settings.php">Mi Perfil</a></li>
+                            <li><a href="../loged/orders.php" class="active">Pedidos</a></li>
+                            <li><a href="../loged/products.php">Productos</a></li>
+                            <li><a href="../loged/reports.php">Reportes</a></li>
+                            <li><a href="../loged/profile.php">Mi Perfil</a></li>
                         <?php endif; ?>
 
                         <?php if ($user_role_name === 'cliente'): // Funciones solo para clientes ?>
-                            <li><a href="../admin/orders.php">Comprar</a></li>
-                            <li><a href="../admin/orders.php" class="active">Mis Pedidos</a></li>
-                            <li><a href="../profile.php">Mi Perfil</a></li>
+                            <li><a href="../carta.php">Comprar</a></li>
+                            <li><a href="../loged/orders.php" class="active">Mis Pedidos</a></li>
+                            <li><a href="../loged/profile.php">Mi Perfil</a></li>
                         <?php endif; ?>
 
-                        <li><a href="../../../backend/php/conexion/logout.php">Cerrar Sesión</a></li>
+                        <li><a href="../../../backend/php/conexion/logout.php" id="logout-link">Cerrar Sesión</a></li>
                     </ul>
                 </nav>
             </aside>
