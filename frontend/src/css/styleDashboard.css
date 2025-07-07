@@ -84,9 +84,6 @@ body#index-page
             margin: 0;
             padding: 0;
         }
-        /* =========================
-        index carousel
-        ========================= */
         .carousel {
         position: relative;
         width: 100%;
@@ -398,10 +395,11 @@ RESPONSIVE
         }
 
         /* Botones personalizados para cafetería */
-        .btn-add-user, .btn-success, .btn-add-product {
+        .btn-add-user, .btn-success, .btn-add-product, .btn_cambio_estado {
             background: #0e7af5;
             color: #fff;
             border: none;
+            width: 40%;
             padding: 10px 22px;
             border-radius: 6px;
             font-weight: bold;
@@ -474,6 +472,25 @@ RESPONSIVE
             background: #c97c3b;
             box-shadow: 0 2px 8px #0002;
         }
+        .btn-activate {
+            font-size: 0.9rem;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: inline-block;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 8px #0001;
+            margin: 2px 0;
+            text-transform: capitalize;
+            background: #ddcb28;
+            color: #fff;
+            border: none;
+            margin-right: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+        }
+        .btn-activate
         /* Tabla amigable */
         .users-table th, .users-table td {
             padding: 10px 8px;

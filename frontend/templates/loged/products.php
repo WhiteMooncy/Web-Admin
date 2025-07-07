@@ -135,6 +135,5 @@ require_once '../../../backend/php/conexion/check_role.php';
             </form>
         </div>
     </div>
-    <script src="../../src/js/find.js"></script>
 </body>
 </html>

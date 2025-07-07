@@ -1,6 +1,6 @@
 <?php
 session_start();
-include __DIR__ . '/../conexion/db.php';
+include __DIR__ . '../../conexion/db.php';
 
 // Usa el nombre de rol correcto según tu sistema
 $rol = $_SESSION['user_role_name'] ?? null;
@@ -17,23 +17,23 @@ if ($rol === 'admin' || $rol === 'empleado') {
             $stmt->bind_param("si", $nuevo_estado, $pedido_id);
             if ($stmt->execute()) {
                 $stmt->close();
-                header("Location: ../../../frontend/templates/admin/orders.php?msg=actualizado");
+                header("Location: ../../../frontend/templates/loged/orders.php?msg=actualizado");
                 exit;
             } else {
                 $stmt->close();
-                header("Location: ../../../frontend/templates/admin/orders.php?msg=error");
+                header("Location: ../../../frontend/templates/loged/orders.php?msg=error");
                 exit;
             }
         } else {
-            header("Location: ../../../frontend/templates/admin/orders.php?msg=estado_no_permitido");
+            header("Location: ../../../frontend/templates/loged/orders.php?msg=estado_no_permitido");
             exit;
         }
     } else {
-        header("Location: ../../../frontend/templates/admin/orders.php?msg=datos_incompletos");
+        header("Location: ../../../frontend/templates/loged/orders.php?msg=datos_incompletos");
         exit;
     }
 } else {
-    header("Location: ../../../frontend/templates/admin/orders.php?msg=no_autorizado");
+    header("Location: ../../../frontend/templates/loged/orders.php?msg=no_autorizado");
     exit;
 }
 ?>

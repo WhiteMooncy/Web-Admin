@@ -14,5 +14,5 @@ if ($conn->connect_error) {
 }
 
 // Si todo está bien
-echo "°";
+//echo "°";
 ?>
