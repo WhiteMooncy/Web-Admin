@@ -79,71 +79,6 @@ if (isset($_GET['msg'])) {
     <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../../src/js/logout-confirm.js"></script>
-    <style>
-        /* Estilos adicionales para el select de ordenar */
-        .sort-container {
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .sort-container label {
-            font-weight: 500;
-            color: #333; /* Color de texto para el label */
-        }
-        .sort-container select {
-            padding: 8px 12px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1rem;
-            cursor: pointer;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            appearance: none; /* Elimina la flecha predeterminada del select en algunos navegadores */
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000%22%20d%3D%22M287%2069.9a17.4%2017.4%200%200%200-24.6%200l-118%20118.1-118.1-118.1a17.4%2017.4%200%200%200-24.6%2024.6l130.4%20130.4a17.4%2017.4%200%200%200%2024.6%200L287%2094.5a17.4%2017.4%200%200%200%200-24.6z%22%2F%3E%3C%2Fsvg%3E'); /* Flecha personalizada */
-            background-repeat: no-repeat;
-            background-position: right 10px top 50%;
-            background-size: 12px;
-        }
-        /* Estilos para el hover y focus del select */
-        .sort-container select:hover {
-            border-color: #999;
-        }
-        .sort-container select:focus {
-            outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
-        }
-        /* Estilos para los estados de pedido */
-        .estado {
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-weight: 600;
-            color: white;
-            display: inline-block; /* Para que el padding y border-radius funcionen bien */
-        }
-        .estado.pendiente { background-color: #ffc107; color: #333; } /* Amarillo */
-        .estado.en.preparacion { background-color: #17a2b8; } /* Azul cian */
-        .estado.listo { background-color: #28a745; } /* Verde */
-        .estado.entregado { background-color: #6c757d; } /* Gris */
-        .estado.cancelado { background-color: #dc3545; } /* Rojo */
-
-        /* Estilos para el botón de cambio de estado */
-        .btn_cambio_estado {
-            background-color: #007bff;
-            color: white;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            margin-left: 10px;
-            transition: background-color 0.2s ease;
-        }
-        .btn_cambio_estado:hover {
-            background-color: #0056b3;
-        }
-    </style>
 </head>
 <body id="dash-board">
     <div class="container-layout">
@@ -164,7 +99,7 @@ if (isset($_GET['msg'])) {
                         <li><a href="../loged/profile.php">Mi Perfil</a></li>
                     <?php endif; ?>
 
-                    <?php if ($user_role_name === 'empleado'):?>
+                    <?php if ($user_role_name === 'empleado'): ?>
                         <?php if ($user_role_name !== 'administrador'): // Evita duplicar si ya es admin ?>
                             <li><a href="../loged/orders.php" class="active">Pedidos</a></li>
                             <li><a href="../loged/products.php">Productos</a></li>
@@ -185,8 +120,6 @@ if (isset($_GET['msg'])) {
         </aside>
         <main>
             <h1>Listado de Pedidos</h1>
-
-            <!-- Desplegable para ordenar pedidos -->
             <div class="sort-container">
                 <label for="sortOrders">Ordenar por:</label>
                 <select id="sortOrders" onchange="sortOrdersTable()">
@@ -239,11 +172,11 @@ if (isset($_GET['msg'])) {
                                     </span>
                                 </td>
                                 <td>$<?php echo number_format($row['total'], 0, ',', '.'); ?></td>
-                                <?php if ($user_role_name === 'administrador' || $user_role_name === 'empleado' || $user_role_name === 'trabajador'): ?>
+                                <?php if ($user_role_name === 'admin' || $user_role_name === 'empleado' || $user_role_name === 'trabajador'): ?>
                                     <td>
                                         <form action="../../../backend/php/funcions/cambiar_estado_pedido.php" method="POST">
                                             <input type="hidden" name="ID_Pedido" value="<?php echo htmlspecialchars($row['ID_Pedido']); ?>">
-                                            <select class="estado-select" name="estado">
+                                            <select class="estado" name="estado">
                                                 <option value="pendiente" <?php if($estado == 'pendiente') echo 'selected'; ?>>Pendiente</option>
                                                 <option value="en preparacion" <?php if($estado == 'en preparacion') echo 'selected'; ?>>En preparación</option>
                                                 <option value="listo" <?php if($estado == 'listo') echo 'selected'; ?>>Listo</option>
