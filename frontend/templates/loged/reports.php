@@ -33,18 +33,7 @@ $ingresosTotales = ($queryIngresos && $queryIngresos->num_rows > 0) ? $queryIngr
 // Ticket promedio
 $ticketPromedio = $totalPedidos > 0 ? round($ingresosTotales / $totalPedidos, 0) : 0;
 // Producto más vendido
-$queryMasVendido = $conn->query("SELECT
-    p.Producto,
-        SUM(dp.cantidad) AS total_vendido
-    FROM
-        productos p
-    JOIN
-        detalle_pedidos dp ON p.ID_Producto = dp.ID_Producto_FK
-    GROUP BY
-        p.Producto
-    ORDER BY
-        total_vendido DESC
-    LIMIT 1;");
+$queryMasVendido = $conn->query("SELECT Producto FROM productos ORDER BY vendidos DESC LIMIT 1");
 $productoMasVendido = ($queryMasVendido && $queryMasVendido->num_rows > 0) ? $queryMasVendido->fetch_assoc()['Producto'] : 'N/A';
 if (!$queryMasVendido) {
     error_log("Error en la consulta de Producto más vendido (columna 'vendidos' podría no existir): " . $conn->error);
@@ -158,12 +147,9 @@ if (isset($conn) && $conn instanceof mysqli) {
                 </nav>
             </aside>
             <main>
-                <h1>Reportes Generales</h1>
+                <h1 class="text-center text-primary mb-5">📊 Reportes Generales</h1>
                 <div class="container mt-5">
-                    <h1 class="text-center text-primary mb-5">📊 Reportes del Sistema</h1>
-
                     <!-- Reportes Generales -->
-                    <div class="section-title">Reportes Generales</div>
                     <div class="row">
                         <div class="col-md-6 col-lg-3"><div class="report-card text-center">
                             <div class="report-title">Total de usuarios registrados</div>
@@ -182,7 +168,6 @@ if (isset($conn) && $conn instanceof mysqli) {
                             <div class="report-value">$<?= number_format($ticketPromedio, 0, ',', '.') ?></div>
                         </div></div>
                     </div>
-
                     <!-- Productos -->
                     <div class="section-title">Productos</div>
                     <div class="row">
@@ -195,7 +180,6 @@ if (isset($conn) && $conn instanceof mysqli) {
                             <div class="report-value"><?= htmlspecialchars($productoBajoStock) ?> (<?= htmlspecialchars($stockBajo) ?> unidades)</div>
                         </div></div>
                     </div>
-
                     <!-- Gráfico de Pedidos por Mes -->
                     <div class="section-title">Pedidos por Mes (Últimos 6 Meses)</div>
                     <div class="report-card">
@@ -264,7 +248,6 @@ if (isset($conn) && $conn instanceof mysqli) {
                     }
                 }
             });
-
             // Ajustar el tamaño del canvas para que sea responsivo
             function resizeCanvas() {
                 const canvasContainer = document.querySelector('.report-card');
@@ -275,7 +258,6 @@ if (isset($conn) && $conn instanceof mysqli) {
                     graficoPedidos.resize(); // Forzar redibujado de Chart.js
                 }
             }
-
             // Llamar al redimensionamiento al cargar y al cambiar el tamaño de la ventana
             resizeCanvas();
             window.addEventListener('resize', resizeCanvas);
