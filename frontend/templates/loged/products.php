@@ -135,5 +135,38 @@ require_once '../../../backend/php/conexion/check_role.php';
             </form>
         </div>
     </div>
+    <script>
+        function saveProduct(event) {
+            event.preventDefault();
+            const productData = {
+                name: document.getElementById('productName').value,
+                category: document.getElementById('productCategory').value,
+                price: parseFloat(document.getElementById('productPrice').value),
+                stock: parseInt(document.getElementById('productStock').value),
+                status: document.getElementById('productStatus').value
+            };
+            fetch('../../../backend/php/funcions/product_add.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(productData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire('Producto agregado', 'Se ha guardado correctamente', 'success');
+                    document.getElementById('productForm').reset();
+                    closeProductModal();
+                    location.reload(); // recargar la tabla
+                } else {
+                    Swal.fire('Error', data.message || 'No se pudo guardar', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire('Error', 'Hubo un problema con la conexión', 'error');
+            });
+        }
+    </script>
+    <script src="../../src/js/find_products.js"></script>
 </body>
 </html>

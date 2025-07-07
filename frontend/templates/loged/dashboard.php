@@ -22,35 +22,30 @@ require_once '../../../backend/php/conexion/check_role.php';
             <nav class="sidebar-nav">
                 <ul>
                     <li><a href="../loged/dashboard.php" class="active">Inicio</a></li>
-
-                    <?php if ($user_role_name === 'admin'): // Funciones solo para administradores ?>
+                    <?php if ($user_role_name === 'admin'): ?>
                         <li><a href="../loged/manage_users.php">Usuarios</a></li>
                         <li><a href="../loged/orders.php">Pedidos</a></li>
                         <li><a href="../loged/products.php">Productos</a></li>
                         <li><a href="../loged/reports.php">Reportes</a></li>
                         <li><a href="../loged/profile.php">Mi Perfil</a></li>
                     <?php endif; ?>
-
-                    <?php if ($user_role_name === 'empleado'): // Funciones para administradores y empleados ?>
+                    <?php if ($user_role_name === 'empleado'): ?>
                         <li><a href="../loged/orders.php">Pedidos</a></li>
                         <li><a href="../loged/products.php">Productos</a></li>
                         <li><a href="../loged/reports.php">Reportes</a></li>
                         <li><a href="../loged/profile.php">Mi Perfil</a></li>
                     <?php endif; ?>
-
-                    <?php if ($user_role_name === 'cliente'): // Funciones solo para clientes ?>
+                    <?php if ($user_role_name === 'cliente'): ?>
                         <li><a href="../carta.php">Comprar</a></li>
                         <li><a href="../loged/orders.php">Mis Pedidos</a></li>
                         <li><a href="../loged/profile.php">Mi Perfil</a></li>
                     <?php endif; ?>
-
                     <li><a href="../../../backend/php/conexion/logout.php" id="logout-link">Cerrar Sesión</a></li>
                 </ul>
             </nav>
         </aside>
         <main>
             <h2>Contenido Principal</h2>
-
             <?php if ($user_role_name === 'admin'): ?>
                 <p>Eres un **Administrador**. Tienes acceso completo a todas las herramientas de gestión.</p>
             <?php elseif ($user_role_name === 'empleado'): ?>
@@ -62,9 +57,7 @@ require_once '../../../backend/php/conexion/check_role.php';
             <?php else: ?>
                 <p>Tu rol no está definido o no es reconocido. Por favor, contacta al soporte.</p>
             <?php endif; ?>
-
             <p>Información general disponible para todos los usuarios con sesión iniciada.</p>
-
         </main>
         <footer>
             © 2025 - Cafetería

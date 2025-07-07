@@ -19,19 +19,16 @@ session_start();
         <div class="login-container">
             <h2>Iniciar Sesión</h2>
             <?php
-            // Display login error message if set
             if (isset($_SESSION['login_error'])) {
                 echo '<p style="color: red; text-align: center;">' . $_SESSION['login_error'] . '</p>';
-                unset($_SESSION['login_error']); // Clear the error after displaying
+                unset($_SESSION['login_error']); 
             }
             ?>
             <form method="post" action="../../../backend/php/conexion/login.php">
                 <label for="username">Nombre de Usuario:</label>
                 <input type="text" name="username" id="username" required autocomplete="username">
-
                 <label for="password">Contraseña:</label>
                 <input type="password" name="password" id="password" required>
-
                 <button type="submit">Iniciar Sesión</button>
                 <p class="register-link">¿No tienes cuenta? requistrate Aqui</p>
             </form>
