@@ -544,7 +544,7 @@ body#cart-page
 
             main {
                 width: auto;
-                margin-top: 200%;
+                margin-top: 20px;
             }
 
             @media (max-width: 1024px) {

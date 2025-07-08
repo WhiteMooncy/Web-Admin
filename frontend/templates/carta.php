@@ -3,13 +3,11 @@ session_start();
 if (!isset($_SESSION['carrito']) || !is_array($_SESSION['carrito'])) {
     $_SESSION['carrito'] = [];
 }
-// Asumiendo que 'IS_Usuario' es la variable de sesión que estableces cuando un usuario inicia sesión.
 $user_logged_in = isset($_SESSION['IS_Usuario']);
-
 $login_url = '../templates/loged/form_login.php';
-$checkout_url = '../templates/loged/checkout.php'; // Asegúrate de que esta ruta sea correcta
-$mi_cuenta_url = '../templates/mi_cuenta.php'; // Define la URL de 'Mi Cuenta'
-$logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre de sesión
+$checkout_url = '../templates/loged/checkout.php'; 
+$mi_cuenta_url = '../templates/mi_cuenta.php'; 
+$logout_url = '../backend/php/funcions/logout.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -19,10 +17,8 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
         <link rel="stylesheet" href="../src/css/StyleDashboard.css?v=2">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-        <style>
-        </style>
     </head>
-    <body id="cart-page" style="margin-top: 50px; width: 100%; height: 100vh; overflow-x: hidden; background-color: #f0f0f0;">
+    <body id="cart-page" style="margin:0; padding: 4%;">
         <header>
             <div class="navbar-brand">
                 <nav class="navbar">
@@ -64,7 +60,7 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
                                             <span class="price">$3.400</span>
                                             <button class="button" onclick="agregarCarrito('Expresso', 3400, 'bebestibles', 'expresso')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/bebestibles/expresso.avif" alt="expresso">
+                                        <img src="../src/menu/cafe.jpeg" alt="expresso">
                                     </div>
                                     <div class="item">
                                         <div class="item-info">
@@ -72,11 +68,10 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
                                             <span class="price">$3.800</span>
                                             <button class="button" onclick="agregarCarrito('Capuccino', 3800, 'bebestibles', 'capuccino')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/bebestibles/capuccino.avif" alt="capuccino">
+                                        <img src="../src/menu//capuccino.jpeg" alt="capuccino">
                                     </div>
                                 </div>
                             </div>
-
                             <div id="tag-bebidas" class="container">
                                 <h1>Bebidas</h1>
                             </div>
@@ -88,7 +83,7 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
                                             <span class="price">$2.500</span>
                                             <button class="button" onclick="agregarCarrito('Té Verde', 2500, 'bebestibles', 'te_verde')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/bebestibles/te_verde.avif" alt="Té Verde">
+                                        <img src="../src/menu/TeVerde.jpeg" alt="Té Verde">
                                     </div>
                                     <div class="item">
                                         <div class="item-info">
@@ -96,7 +91,7 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
                                             <span class="price">$3.000</span>
                                             <button class="button" onclick="agregarCarrito('Jugo Natural', 3000, 'bebestibles', 'jugo_natural')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/bebestibles/jugo_natural.avif" alt="Jugo Natural">
+                                        <img src="../src/menu/jugodenaranja.jpeg" alt="Jugo Natural">
                                     </div>
                                     <div class="item">
                                         <div class="item-info">
@@ -104,7 +99,7 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
                                             <span class="price">$1.500</span>
                                             <button class="button" onclick="agregarCarrito('Agua', 1500, 'bebestibles', 'agua')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/bebestibles/agua.avif" alt="Agua">
+                                        <img src="../src/menu/agua.jpeg" alt="Agua">
                                     </div>
                                     <div class="item">
                                         <div class="item-info">
@@ -112,11 +107,10 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
                                             <span class="price">$1.800</span>
                                             <button class="button" onclick="agregarCarrito('Agua con Gas', 1800, 'bebestibles', 'agua_con_gas')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/bebestibles/agua_con_gas.avif" alt="Agua con Gas">
+                                        <img src="../src/menu/aguagas.jpeg" alt="Agua con Gas">
                                     </div>
                                 </div>
                             </div>
-
                             <div id="tag-platos" class="container">
                                 <h1>Comidas</h1>
                             </div>
@@ -128,7 +122,7 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
                                             <span class="price">$5.500</span>
                                             <button class="button" onclick="agregarCarrito('Sandwich de Pollo', 5500, 'comidas', 'sandwich_pollo')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/comidas/sandwich_pollo.avif" alt="Sandwich de Pollo">
+                                        <img src="../src/menu/pandepollo.jpeg" alt="Sandwich de Pollo">
                                     </div>
                                     <div class="item">
                                         <div class="item-info">
@@ -136,7 +130,7 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
                                             <span class="price">$2.800</span>
                                             <button class="button" onclick="agregarCarrito('Croissant', 2800, 'comidas', 'croissant')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/comidas/croissant.avif" alt="Croissant">
+                                        <img src="../src/menu/croasn.jpeg" alt="Croissant">
                                     </div>
                                     <div class="item">
                                         <div class="item-info">
@@ -144,7 +138,7 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
                                             <span class="price">$6.200</span>
                                             <button class="button" onclick="agregarCarrito('Ensalada César', 6200, 'comidas', 'ensalada_cesar')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/comidas/ensalada_cesar.avif" alt="Ensalada César">
+                                        <img src="../src/menu/ensaladdacesar.jpeg" alt="Ensalada César">
                                     </div>
                                     <div class="item">
                                         <div class="item-info">
@@ -152,11 +146,10 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
                                             <span class="price">$2.000</span>
                                             <button class="button" onclick="agregarCarrito('Empanada', 2000, 'comidas', 'empanada')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/comidas/empanada.avif" alt="Empanada">
+                                        <img src="../src/menu/empanada.jpeg" alt="Empanada">
                                     </div>
                                 </div>
                             </div>
-
                             <div id="tag-postres" class="container">
                                 <h1>Postres</h1>
                             </div>
@@ -168,7 +161,7 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
                                             <span class="price">$3.500</span>
                                             <button class="button" onclick="agregarCarrito('Brownie', 3500, 'postres', 'brownie')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/postres/brownie.avif" alt="Brownie">
+                                        <img src="../src/menu/brownie.jpeg" alt="Brownie">
                                     </div>
                                     <div class="item">
                                         <div class="item-info">
@@ -176,7 +169,7 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
                                             <span class="price">$4.000</span>
                                             <button class="button" onclick="agregarCarrito('Tarta de Manzana', 4000, 'postres', 'tarta_manzana')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/postres/tarta_manzana.avif" alt="Tarta de Manzana">
+                                        <img src="../src/menu/tartademanzana.jpeg" alt="Tarta de Manzana">
                                     </div>
                                 </div>
                             </div>
@@ -199,7 +192,7 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
                         <?php
                         $total = 0;
                         foreach ($_SESSION['carrito'] as $index => $item) {
-                            $imagen = isset($item['imagen']) && !empty($item['imagen']) ? $item['imagen'] : '../src/menu/default-image.avif';
+                            $imagen = isset($item['imagen']) && !empty($item['imagen']) ? $item['imagen'] : '../src/menu/default-image.jpeg';
                             $subtotal = $item['precio'] * $item['cantidad'];
                             $total += $subtotal;
                             echo "
@@ -250,7 +243,7 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
             const LOGIN_URL = '<?php echo $login_url; ?>';
             const CHECKOUT_URL = '<?php echo $checkout_url; ?>';
             function agregarCarrito(nombre, precio, type, img) {
-                var src = '../src/menu/' + type + '/' + img + '.avif';
+                var src = '../src/menu/' + type + '/' + img + '.jpeg';
                 fetch('../../backend/php/funcions/add_cart.php', {
                     method: 'POST',
                     headers: { "Content-Type": "application/x-www-form-urlencoded" },
