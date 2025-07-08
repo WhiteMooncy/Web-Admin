@@ -1,5 +1,6 @@
 <?php
 require_once '../../../backend/php/conexion/check_role.php';
+require_once '../../../backend/php/conexion/db.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -14,7 +15,7 @@ require_once '../../../backend/php/conexion/check_role.php';
 </head>
 <body id="dash-board">
     <div class="container-layout">
-        <header>
+        <header class="header">
             <h1>Gestión de Productos</h1>
         </header>
         <aside>
@@ -61,32 +62,38 @@ require_once '../../../backend/php/conexion/check_role.php';
                     </thead>
                     <tbody>
                         <?php
-                        $sql = "SELECT ID_Producto, Producto, Categoria, Precio_Unitario, Stock, Estado FROM productos";
-                        $result = $conn->query($sql);
-                        if ($result && $result->num_rows > 0):
-                            while($row = $result->fetch_assoc()):
+                        if (isset($conn)) {
+                            $sql = "SELECT ID_Producto, Producto, Categoria, Precio_Unitario, Stock, Estado FROM productos";
+                            $result = $conn->query($sql);
+                            if ($result && $result->num_rows > 0):
+                                while($row = $result->fetch_assoc()):
                         ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($row['ID_Producto']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Producto']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Categoria']); ?></td>
-                                <td><?php echo number_format($row['Precio_Unitario']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Stock']); ?></td>
-                                <td>
-                                    <?php echo $row['Estado'] ? 'Activo' : 'Inactivo'; ?>
-                                </td>
-                                <td>
-                                    <!-- Aquí puedes poner botones para editar/eliminar con JS o formularios -->
-                                    <button class="btn-edit" onclick="editProduct(<?php echo $row['ID_Producto']; ?>)">Editar</button>
-                                    <button class="btn-delete" onclick="deleteProduct(<?php echo $row['ID_Producto']; ?>)">Eliminar</button>
-                                </td>
-                            </tr>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($row['ID_Producto']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['Producto']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['Categoria']); ?></td>
+                                        <td><?php echo number_format($row['Precio_Unitario']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['Stock']); ?></td>
+                                        <td>
+                                            <?php echo $row['Estado'] ? 'Activo' : 'Inactivo'; ?>
+                                        </td>
+                                        <td>
+                                            <button class="btn-edit" onclick="editProduct(<?php echo $row['ID_Producto']; ?>)">Editar</button>
+                                            <button class="btn-delete" onclick="inactivateProduct(<?php echo $row['ID_Producto']; ?>)">Inactivar</button>
+                                        </td>
+                                    </tr>
                         <?php
-                            endwhile;
-                        else:
+                                endwhile;
+                            else:
                         ?>
-                            <tr><td colspan="7">No hay productos registrados.</td></tr>
-                        <?php endif; ?>
+                                <tr><td colspan="7">No hay productos registrados.</td></tr>
+                        <?php
+                            endif;
+                            $conn->close(); 
+                        } else {
+                            echo "<tr><td colspan='7'>Error: No se pudo conectar a la base de datos.</td></tr>";
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
@@ -136,34 +143,138 @@ require_once '../../../backend/php/conexion/check_role.php';
         </div>
     </div>
     <script>
+        // --- Funciones del Modal ---
+        function showProductModal(product = null) {
+            const modal = document.getElementById('productModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const productIdField = document.getElementById('productId');
+            const productNameField = document.getElementById('productName');
+            const productCategoryField = document.getElementById('productCategory');
+            const productPriceField = document.getElementById('productPrice');
+            const productStockField = document.getElementById('productStock');
+            const productStatusField = document.getElementById('productStatus');
+            const productForm = document.getElementById('productForm');
+            productForm.reset(); 
+            productIdField.value = '';
+            if (product) {
+                // Modo edición: rellenar campos con datos del producto
+                modalTitle.textContent = 'Editar Producto';
+                productIdField.value = product.ID_Producto;
+                productNameField.value = product.Producto;
+                productCategoryField.value = product.Categoria;
+                productPriceField.value = product.Precio_Unitario;
+                productStockField.value = product.Stock;
+                // Ajustar el valor del select de estado 
+                productStatusField.value = product.Estado == 1 ? 'Activo' : 'Inactivo';
+            } else {
+                // Modo añadir: título y campos vacíos
+                modalTitle.textContent = 'Agregar Producto';
+                productStatusField.value = 'Activo'; 
+            }
+            modal.style.display = 'flex';
+        }
+        function closeProductModal() {
+            document.getElementById('productModal').style.display = 'none'; 
+            document.getElementById('productForm').reset(); 
+            document.getElementById('productId').value = ''; 
+        }
+        // --- Función para obtener un producto (para edición) ---
+        function editProduct(productId) {
+            fetch(`../../../backend/php/funcions/product_get.php?id=${productId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al cargar la información del producto.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success && data.product) {
+                        showProductModal(data.product); 
+                    } else {
+                        Swal.fire('Error', data.message || 'No se pudo cargar la información del producto.', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al obtener producto:', error);
+                    Swal.fire('Error', error.message || 'Hubo un problema al conectar con el servidor para obtener el producto.', 'error');
+                });
+        }
+        // --- Función para guardar (añadir o editar) producto ---
         function saveProduct(event) {
             event.preventDefault();
+            const productId = document.getElementById('productId').value;
             const productData = {
+                id: productId,
                 name: document.getElementById('productName').value,
                 category: document.getElementById('productCategory').value,
                 price: parseFloat(document.getElementById('productPrice').value),
                 stock: parseInt(document.getElementById('productStock').value),
                 status: document.getElementById('productStatus').value
             };
-            fetch('../../../backend/php/funcions/product_add.php', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+            const url = productId ? '../../../backend/php/funcions/product_edit.php' : '../../../backend/php/funcions/product_add.php';
+            const method = 'POST';
+            fetch(url, {
+                method: method,
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(productData)
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('La respuesta del servidor no fue OK.');
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
-                    Swal.fire('Producto agregado', 'Se ha guardado correctamente', 'success');
-                    document.getElementById('productForm').reset();
-                    closeProductModal();
-                    location.reload(); // recargar la tabla
+                    Swal.fire(productId ? 'Producto Actualizado' : 'Producto Agregado', data.message, 'success');
+                    closeProductModal(); 
+                    location.reload(); 
                 } else {
-                    Swal.fire('Error', data.message || 'No se pudo guardar', 'error');
+                    Swal.fire('Error', data.message || 'No se pudo guardar el producto.', 'error');
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
-                Swal.fire('Error', 'Hubo un problema con la conexión', 'error');
+                console.error('Error al guardar producto:', error);
+                Swal.fire('Error', 'Hubo un problema con la conexión al guardar el producto.', 'error');
+            });
+        }
+        // --- Función para inactivar producto (marcar sin stock) ---
+        function inactivateProduct(productId) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡El producto será inactivado y su stock se establecerá en 0! Esto no se puede deshacer fácilmente.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, inactivar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('../../../backend/php/funcions/product_inactivate.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: productId })
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('La respuesta del servidor no fue OK.');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire('Inactivado!', data.message, 'success');
+                            location.reload();
+                        } else {
+                            Swal.fire('Error', data.message || 'No se pudo inactivar el producto.', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error al inactivar producto:', error);
+                        Swal.fire('Error', 'Hubo un problema con la conexión al inactivar el producto.', 'error');
+                    });
+                }
             });
         }
     </script>

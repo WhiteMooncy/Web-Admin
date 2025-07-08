@@ -17,7 +17,7 @@ require_once '../../backend/php/conexion/db.php';
                     <a href="../templates/index.php">
                         <img src="../../frontend/src/icons/icon_cafe.png" alt="Logo" style="width: 32px; height: 32px; padding: 0; justify-content: center;">  
                     </a>
-                    <a href="#">Carta</a>
+                    <a href="../templates/carta.php">Carta</a>
                     <details class="dropdown">
                         <summary>Contactanos</summary>
                         <div class="dropdown-menu">

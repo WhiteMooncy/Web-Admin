@@ -32,6 +32,8 @@ footer{
     background: #0002;
     color: #fff;
     text-align: center;
+    margin-top: 1rem;
+    width: 99%;
     padding: 18px 0;
     border-radius: 12px;
     font-size: 1rem;
@@ -250,7 +252,7 @@ body#dash-board
         margin: 0 auto;
         padding: 20px 0;
     }
-    header {
+    .header {
         grid-area: header;
         background: linear-gradient(90deg, rgba(0, 0, 0, 0.836) 70%, rgb(0, 0, 0) 100%);
         color: #fff;
@@ -395,7 +397,9 @@ body#dash-board
         padding: 6px 18px;
         border-radius: 8px;
         font-weight: bold;
+        justify-content: center;
         display: inline-block;
+        position: center;
         letter-spacing: 1px;
         box-shadow: 0 2px 8px #0001;
         transition: background 0.3s, color 0.3s, border 0.3s;
@@ -403,11 +407,11 @@ body#dash-board
         text-transform: capitalize;
     }
     /* Estilos para los estados de pedido */
-    .estado.pendiente { background-color: #ffc107; color: #333; } /* Amarillo */
-    .estado.en.preparacion { background-color: #17a2b8; } /* Azul cian */
-    .estado.listo { background-color: #28a745; } /* Verde */
-    .estado.entregado { background-color: #3b96e6; } /* Gris */
-    .estado.cancelado { background-color: #d62929; } /* Gris */
+    .estado.pendiente { width: 6rem; background-color: #ffc107; color: #333; } 
+    .estado.en.preparacion { width: 6rem; background-color: #17a2b8; } 
+    .estado.listo { width: 6rem; background-color: #28a745; } 
+    .estado.entregado { width: 6rem; background-color: #3b96e6; } 
+    .estado.cancelado { width: 6rem; background-color: #d62929; } 
 
 /* =========================
 RESPONSIVE

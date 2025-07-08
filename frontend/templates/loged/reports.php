@@ -32,13 +32,7 @@ $queryIngresos = $conn->query("SELECT SUM(total) as total FROM pedidos");
 $ingresosTotales = ($queryIngresos && $queryIngresos->num_rows > 0) ? $queryIngresos->fetch_assoc()['total'] : 0;
 // Ticket promedio
 $ticketPromedio = $totalPedidos > 0 ? round($ingresosTotales / $totalPedidos, 0) : 0;
-// Producto más vendido
-$queryMasVendido = $conn->query("SELECT Producto FROM productos ORDER BY vendidos DESC LIMIT 1");
-$productoMasVendido = ($queryMasVendido && $queryMasVendido->num_rows > 0) ? $queryMasVendido->fetch_assoc()['Producto'] : 'N/A';
-if (!$queryMasVendido) {
-    error_log("Error en la consulta de Producto más vendido (columna 'vendidos' podría no existir): " . $conn->error);
-    $productoMasVendido = 'Error de consulta';
-}
+
 // Producto con menor stock
 $queryMenorStock = $conn->query("SELECT Producto, Stock FROM productos ORDER BY Stock ASC LIMIT 1");
 $productoStock = ($queryMenorStock && $queryMenorStock->num_rows > 0) ? $queryMenorStock->fetch_assoc() : null;
@@ -121,7 +115,7 @@ if (isset($conn) && $conn instanceof mysqli) {
     </head>
     <body id="dash-board">
         <div class="container-layout">
-            <header>
+            <header class="header">
                 <h1>Reportes del Sistema</h1>            
                 <h6>¡Bienvenido <?php echo ucfirst(htmlspecialchars($user_role_name)); ?> <?php echo htmlspecialchars($username); ?>!</h6>
             </header>
@@ -171,10 +165,7 @@ if (isset($conn) && $conn instanceof mysqli) {
                     <!-- Productos -->
                     <div class="section-title">Productos</div>
                     <div class="row">
-                        <div class="col-md-6"><div class="report-card text-center">
-                            <div class="report-title">Producto más vendido</div>
-                            <div class="report-value"><?= htmlspecialchars($productoMasVendido) ?></div>
-                        </div></div>
+ 
                         <div class="col-md-6"><div class="report-card text-center">
                             <div class="report-title">Producto con stock más bajo</div>
                             <div class="report-value"><?= htmlspecialchars($productoBajoStock) ?> (<?= htmlspecialchars($stockBajo) ?> unidades)</div>
@@ -203,7 +194,7 @@ if (isset($conn) && $conn instanceof mysqli) {
                     datasets: [{
                         label: 'Número de Pedidos',
                         data: <?= json_encode($totales) ?>,
-                        backgroundColor: 'rgba(13, 110, 253, 0.8)', /* Un azul con algo de transparencia */
+                        backgroundColor: 'rgba(13, 110, 253, 0.8)',
                         borderColor: '#0d6efd',
                         borderWidth: 1
                     }]
@@ -248,7 +239,6 @@ if (isset($conn) && $conn instanceof mysqli) {
                     }
                 }
             });
-            // Ajustar el tamaño del canvas para que sea responsivo
             function resizeCanvas() {
                 const canvasContainer = document.querySelector('.report-card');
                 const canvas = document.getElementById('graficoPedidos');
@@ -258,7 +248,6 @@ if (isset($conn) && $conn instanceof mysqli) {
                     graficoPedidos.resize(); // Forzar redibujado de Chart.js
                 }
             }
-            // Llamar al redimensionamiento al cargar y al cambiar el tamaño de la ventana
             resizeCanvas();
             window.addEventListener('resize', resizeCanvas);
         });

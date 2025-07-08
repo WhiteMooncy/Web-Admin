@@ -8,7 +8,6 @@ if (!isset($conn) || !$conn instanceof mysqli) {
     $alert_status = "error";   
     $conn = null; 
 }
-
 $message = ''; 
 $alert_status = ''; 
 $user_data_edit = null;
@@ -44,24 +43,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
                         if ($stmt_insert->execute()) {
                             $message = "¡Usuario agregado correctamente!";
                             $alert_status = "success";
-                            error_log("Usuario '$username' agregado exitosamente."); // Depuración de éxito
+                            error_log("Usuario '$username' agregado exitosamente."); 
                         } else {
                             $message = "Error al agregar el usuario: " . $stmt_insert->error;
                             $alert_status = "error";
-                            error_log("Error al ejecutar INSERT: " . $stmt_insert->error); // Depuración de error
+                            error_log("Error al ejecutar INSERT: " . $stmt_insert->error);
                         }
                         $stmt_insert->close();
                     } else {
                         $message = "Error al preparar la consulta de inserción: " . $conn->error;
                         $alert_status = "error";
-                        error_log("Error al preparar INSERT SQL: " . $conn->error); // Depuración de error
+                        error_log("Error al preparar INSERT SQL: " . $conn->error); 
                     }
                 }
                 $check_stmt->close();
             } else {
                 $message = "Error al preparar la consulta de verificación de existencia: " . $conn->error;
                 $alert_status = "error";
-                error_log("Error al preparar CHECK: " . $conn->error); // Depuración de error
+                error_log("Error al preparar CHECK: " . $conn->error);
             }
         }
     } else {
@@ -77,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
         $username_edit = trim($_POST['username']);
         $correo_edit = filter_var(trim($_POST['correo']), FILTER_SANITIZE_EMAIL);
         $id_rol_fk_edit = (int)$_POST['id_rol_fk'];
-        $new_password_edit = $_POST['new_password']; // Texto plano
+        $new_password_edit = $_POST['new_password']; 
         // Validaciones
         if (empty($username_edit) || empty($correo_edit) || empty($id_rol_fk_edit) || empty($user_id_edit_form)) {
             $message = "Por favor, rellena todos los campos obligatorios para la edición.";
@@ -113,9 +112,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
                     $param_types .= "i"; 
                     $params[] = &$user_id_edit_form; 
                     if ($stmt_update = $conn->prepare($sql_update)) {
-                        $bind_args = array($param_types);
-                        foreach ($params as $key => $value) {
-                            $bind_args[] = &$params[$key];
+                            $bind_args = array($param_types);
+                            foreach ($params as $key => $value) {
+                                $bind_args[] = &$params[$key];
                         }
                         call_user_func_array([$stmt_update, 'bind_param'], $bind_args);
                         if ($stmt_update->execute()) {
@@ -151,6 +150,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
 if (isset($_GET['action']) && $_GET['action'] == 'deactivate_user' && isset($_GET['id'])) {
     if ($conn) {
         $user_id_deactivate = (int)$_GET['id'];
+        $sql_check_role = "SELECT ID_Rol_FK FROM usuarios WHERE ID_Usuario = ?";
+        if ($stmt_check_role = $conn->prepare($sql_check_role)) {
+            $stmt_check_role->bind_param("i", $user_id_deactivate);
+            $stmt_check_role->execute();
+            $result_check_role = $stmt_check_role->get_result();
+            if ($result_check_role->num_rows > 0) {
+                $user_to_deactivate = $result_check_role->fetch_assoc();
+                // Si el usuario es un administrador (ID_Rol_FK = 1), no permitir la desactivación
+                if ($user_to_deactivate['ID_Rol_FK'] == 1) {
+                    $message = "No se puede inactivar a un usuario con rol de Administrador.";
+                    $alert_status = "error";
+                    $stmt_check_role->close(); 
+                    header("Location: " . $_SERVER['PHP_SELF'] . "?status=" . $alert_status . "&message=" . urlencode($message));
+                    exit();
+                }
+            } else {
+                $message = "El usuario que intentas inactivar no existe.";
+                $alert_status = "error";
+                $stmt_check_role->close();
+                header("Location: " . $_SERVER['PHP_SELF'] . "?status=" . $alert_status . "&message=" . urlencode($message));
+                exit();
+            }
+            $stmt_check_role->close();
+        } else {
+            $message = "Error al preparar la verificación de rol: " . $conn->error;
+            $alert_status = "error";
+            error_log("Error al preparar CHECK ROLE: " . $conn->error);
+            header("Location: " . $_SERVER['PHP_SELF'] . "?status=" . $alert_status . "&message=" . urlencode($message));
+            exit();
+        }
         $sql_deactivate = "UPDATE usuarios SET activo = 0 WHERE ID_Usuario = ?";
         if ($stmt_deactivate = $conn->prepare($sql_deactivate)) {
             $stmt_deactivate->bind_param("i", $user_id_deactivate);
@@ -204,9 +233,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'activate_user' && isset($_GET[
     exit();
 }
 // --- Lógica para Cargar Datos de Edición (GET, para fetch via JS) ---
-// Este bloque es especial porque responde JSON y luego termina la ejecución.
 if (isset($_GET['action']) && $_GET['action'] == 'load_edit_data' && isset($_GET['id'])) {
-    header('Content-Type: application/json'); // Indicar que la respuesta es JSON
+    header('Content-Type: application/json'); 
     if ($conn) {
         $id_usuario_to_edit = (int)$_GET['id'];
         $sql = "SELECT ID_Usuario, username, correo, ID_Rol_FK FROM usuarios WHERE ID_Usuario = ?";
@@ -247,80 +275,79 @@ if (isset($_GET['status']) && isset($_GET['message'])) {
     <title>Cafetería | Administración de Usuarios</title>
     <style>
         .modal {
-            display: none; /* Oculto por defecto */
-            position: fixed; /* Posición fija para cubrir toda la pantalla */
-            z-index: 1000; /* Por encima de todo lo demás */
+            display: none;
+            position: fixed;
+            z-index: 1000; 
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            overflow: auto; /* Habilitar scroll si el contenido es demasiado largo */
-            background-color: rgba(0,0,0,0.6); /* Fondo semi-transparente más oscuro */
-            padding-top: 60px; /* Espacio para el contenido */
-            animation: fadeIn 0.3s forwards; /* Animación de aparición */
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6); 
+            padding-top: 60px;
+            animation: fadeIn 0.3s forwards; 
         }
         .modal-content {
             background-color: #fefefe;
-            margin: 5% auto; /* 5% desde la parte superior y centrado horizontalmente */
-            padding: 30px; /* Más padding */
+            margin: 5% auto; 
+            padding: 30px; 
             border: 1px solid #888;
-            width: 80%; /* Ancho del modal */
-            max-width: 550px; /* Ancho máximo un poco más grande */
-            border-radius: 10px; /* Bordes más redondeados */
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4); /* Sombra más pronunciada */
+            width: 80%; 
+            max-width: 550px; 
+            border-radius: 10px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4); 
             position: relative;
-            animation: slideInTop 0.4s forwards; /* Animación de entrada */
+            animation: slideInTop 0.4s forwards;
         }
         .close-button {
             color: #aaa;
             float: right;
-            font-size: 30px; /* Más grande */
+            font-size: 30px; 
             font-weight: bold;
-            line-height: 1; /* Ajuste para centrado vertical */
+            line-height: 1; 
         }
         .close-button:hover,
         .close-button:focus {
-            color: #333; /* Color más oscuro al pasar el mouse */
+            color: #333; 
             text-decoration: none;
             cursor: pointer;
         }
-        /* Estilos del formulario dentro del modal */
         .modal-content h2 {
             text-align: center;
             color: #333;
-            margin-bottom: 25px; /* Más espacio */
+            margin-bottom: 25px; 
         }
         .modal-content label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 600; /* Más énfasis */
+            font-weight: 600; 
             color: #555;
         }
         .modal-content input[type="text"],
         .modal-content input[type="password"],
         .modal-content input[type="email"],
         .modal-content select {
-            width: calc(100% - 20px); /* Ajuste de ancho */
-            padding: 12px; /* Más padding */
-            margin-bottom: 20px; /* Más espacio */
+            width: calc(100% - 20px); 
+            padding: 12px; 
+            margin-bottom: 20px; 
             border: 1px solid #ccc;
             border-radius: 5px;
             box-sizing: border-box;
             font-size: 16px;
         }
         .modal-content button[type="submit"] {
-            background-color: #28a745; /* Verde Bootstrap */
+            background-color: #28a745; 
             color: white;
             padding: 12px 15px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 18px; /* Texto más grande */
+            font-size: 18px;
             width: 100%;
-            transition: background-color 0.2s ease; /* Transición suave */
+            transition: background-color 0.2s ease; 
         }
         .modal-content button[type="submit"]:hover {
-            background-color: #218838; /* Verde más oscuro al pasar el mouse */
+            background-color: #218838; 
         }
         /* Animaciones */
         @keyframes fadeIn {
@@ -331,10 +358,9 @@ if (isset($_GET['status']) && isset($_GET['message'])) {
             from { transform: translateY(-50px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
-        /* Ajuste para los botones de acción en la tabla */
         .users-table .btn-edit,
         .users-table .btn-delete,
-        .users-table .btn-activate { /* Nuevo estilo para reactivar */
+        .users-table .btn-activate { 
             padding: 5px 10px;
             font-size: 14px;
             margin: 0 5px;
@@ -350,15 +376,15 @@ if (isset($_GET['status']) && isset($_GET['message'])) {
             background-color: #0056b3;
         }
         .users-table .btn-delete {
-            background-color: #dc3545; /* Rojo para inactivar */
+            background-color: #dc3545;
             color: white;
             border: none;
         }
         .users-table .btn-delete:hover {
             background-color: #c82333;
         }
-        .users-table .btn-activate { /* Estilo para botón de reactivar */
-            background-color: #ffc107; /* Amarillo/Naranja */
+        .users-table .btn-activate {
+            background-color: #ffc107; 
             color: #333;
             border: none;
         }
@@ -366,15 +392,15 @@ if (isset($_GET['status']) && isset($_GET['message'])) {
             background-color: #e0a800;
         }
         .inactive-user {
-            background-color: #f8f9fa; /* Fondo ligeramente gris para usuarios inactivos */
-            color: #6c757d; /* Texto atenuado */
+            background-color: #f8f9fa; 
+            color: #6c757d; 
             font-style: italic;
         }
     </style>
 </head>
 <body id="dash-board">
     <div class="container-layout">
-        <header>
+        <header class="header">
             <h1>Administración de Usuarios</h1>
         </header>
         <aside>
@@ -552,7 +578,7 @@ if (isset($_GET['status']) && isset($_GET['message'])) {
                                 document.getElementById('edit_username').value = data.user.username;
                                 document.getElementById('edit_correo').value = data.user.correo;
                                 document.getElementById('edit_id_rol_fk').value = data.user.ID_Rol_FK;
-                                document.getElementById('edit_new_password').value = ''; // Limpiar campo de contraseña
+                                document.getElementById('edit_new_password').value = ''; 
 
                                 editUserModal.style.display = "block";
                             } else {
@@ -585,7 +611,7 @@ if (isset($_GET['status']) && isset($_GET['message'])) {
         function activateUser(userId) {
             Swal.fire({
                 title: '¿Estás seguro?',
-                text: "El usuario será reactivado y volverá a tener acceso.", // Texto modificado
+                text: "El usuario será reactivado y volverá a tener acceso.", 
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonColor: '#ffc107',

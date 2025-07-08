@@ -1,5 +1,5 @@
 <?php
-require_once '../../../backend/php/conexion/db.php'; // Asegúrate de que la conexión esté disponible
+require_once '../conexion/db.php'; // Asegúrate de que la conexión esté disponible
 session_start(); // Necesario si usas sesiones para roles o autenticación
 
 header('Content-Type: application/json'); // La respuesta siempre será JSON
@@ -10,21 +10,32 @@ if (!isset($conn) || !$conn instanceof mysqli) {
     exit();
 }
 
-$action = $_GET['action'] ?? $_POST['action'] ?? '';
+// Inicializar $action de forma segura
+$action = '';
+// Primero, intentar obtener 'action' de la URL (para GET requests como get_product)
+if (isset($_GET['action'])) {
+    $action = $_GET['action'];
+}
 
 // Leer los datos JSON si es una petición POST
 $input = json_decode(file_get_contents('php://input'), true);
 
+// Si es una petición POST y la acción no se encontró en la URL, buscarla en el cuerpo JSON
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $input && isset($input['action'])) {
+    $action = $input['action'];
+}
+
 switch ($action) {
     case 'add_product':
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $input) {
-            $productName = $conn->real_escape_string($input['name']);
-            $productCategory = $conn->real_escape_string($input['category']);
-            $productPrice = (float)$input['price'];
-            $productStock = (int)$input['stock'];
-            $productStatus = $conn->real_escape_string($input['status']);
+            $productName = $conn->real_escape_string($input['name'] ?? '');
+            $productCategory = $conn->real_escape_string($input['category'] ?? '');
+            $productPrice = isset($input['price']) ? (float)$input['price'] : -1; // Usar -1 para indicar error si no está
+            $productStock = isset($input['stock']) ? (int)$input['stock'] : -1;
+            // Convertir el estado de string ('Activo'/'Inactivo') a TINYINT (1/0) si tu DB lo espera así
+            $productStatus = ($input['status'] === 'Activo') ? 1 : 0;
 
-            if (empty($productName) || empty($productCategory) || $productPrice < 0 || $productStock < 0 || empty($productStatus)) {
+            if (empty($productName) || empty($productCategory) || $productPrice < 0 || $productStock < 0) {
                 echo json_encode(['success' => false, 'message' => 'Todos los campos son obligatorios y deben ser válidos.']);
                 break;
             }
@@ -55,7 +66,10 @@ switch ($action) {
                 $stmt->execute();
                 $result = $stmt->get_result();
                 if ($result->num_rows > 0) {
-                    echo json_encode(['success' => true, 'product' => $result->fetch_assoc()]);
+                    $product = $result->fetch_assoc();
+                    // Asegurarse de que el campo 'Estado' sea un booleano o string 'Activo'/'Inactivo' si tu JS lo espera así,
+                    // aunque en el modal ya lo transformamos para el select. Aquí lo dejamos como viene de DB (0/1 o string).
+                    echo json_encode(['success' => true, 'product' => $product]);
                 } else {
                     echo json_encode(['success' => false, 'message' => 'Producto no encontrado.']);
                 }
@@ -71,14 +85,14 @@ switch ($action) {
     case 'update_product':
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $input) {
             $productId = (int)$input['id'];
-            $productName = $conn->real_escape_string($input['name']);
-            $productCategory = $conn->real_escape_string($input['category']);
-            $productPrice = (float)$input['price'];
-            $productStock = (int)$input['stock'];
-            $productStatus = $conn->real_escape_string($input['status']);
+            $productName = $conn->real_escape_string($input['name'] ?? '');
+            $productCategory = $conn->real_escape_string($input['category'] ?? '');
+            $productPrice = isset($input['price']) ? (float)$input['price'] : -1;
+            $productStock = isset($input['stock']) ? (int)$input['stock'] : -1;
+            $productStatus = ($input['status'] === 'Activo') ? 1 : 0;
 
-            if (empty($productName) || empty($productCategory) || $productPrice < 0 || $productStock < 0 || empty($productStatus)) {
-                echo json_encode(['success' => false, 'message' => 'Todos los campos son obligatorios y deben ser válidos.']);
+            if ($productId <= 0 || empty($productName) || empty($productCategory) || $productPrice < 0 || $productStock < 0) {
+                echo json_encode(['success' => false, 'message' => 'Todos los campos son obligatorios y deben ser válidos para actualizar.']);
                 break;
             }
 
@@ -86,7 +100,11 @@ switch ($action) {
             if ($stmt = $conn->prepare($sql)) {
                 $stmt->bind_param("ssdisi", $productName, $productCategory, $productPrice, $productStock, $productStatus, $productId);
                 if ($stmt->execute()) {
-                    echo json_encode(['success' => true, 'message' => 'Producto actualizado correctamente.']);
+                    if ($stmt->affected_rows > 0) {
+                        echo json_encode(['success' => true, 'message' => 'Producto actualizado correctamente.']);
+                    } else {
+                        echo json_encode(['success' => true, 'message' => 'No se realizaron cambios en el producto.']);
+                    }
                 } else {
                     echo json_encode(['success' => false, 'message' => 'Error al actualizar el producto: ' . $stmt->error]);
                 }
@@ -99,29 +117,38 @@ switch ($action) {
         }
         break;
 
-    case 'delete_product': // Considera cambiar a 'inactivate_product' para no borrar permanentemente
+    case 'inactivate_product': // Nuevo caso para inactivar
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $input && isset($input['id'])) {
             $productId = (int)$input['id'];
-            // Opcional: Cambiar a UPDATE productos SET Estado = 'Inactivo' WHERE ID_Producto = ?
-            $sql = "DELETE FROM productos WHERE ID_Producto = ?"; 
+
+            if ($productId <= 0) {
+                echo json_encode(['success' => false, 'message' => 'ID de producto inválido para inactivar.']);
+                break;
+            }
+
+            // Actualizar el estado a 'Inactivo' (o 0) y el stock a 0
+            $sql = "UPDATE productos SET Estado = 0, Stock = 0 WHERE ID_Producto = ?"; // Asumiendo 0 para 'Inactivo'
             if ($stmt = $conn->prepare($sql)) {
                 $stmt->bind_param("i", $productId);
                 if ($stmt->execute()) {
-                    echo json_encode(['success' => true, 'message' => 'Producto eliminado correctamente.']);
+                    if ($stmt->affected_rows > 0) {
+                        echo json_encode(['success' => true, 'message' => 'Producto inactivado y stock marcado sin existencias correctamente.']);
+                    } else {
+                        echo json_encode(['success' => false, 'message' => 'Producto no encontrado o ya estaba inactivo/sin stock.']);
+                    }
                 } else {
-                    echo json_encode(['success' => false, 'message' => 'Error al eliminar el producto: ' . $stmt->error]);
+                    echo json_encode(['success' => false, 'message' => 'Error al inactivar el producto: ' . $stmt->error]);
                 }
                 $stmt->close();
             } else {
-                echo json_encode(['success' => false, 'message' => 'Error al preparar la consulta de eliminar: ' . $conn->error]);
+                echo json_encode(['success' => false, 'message' => 'Error al preparar la consulta de inactivar: ' . $conn->error]);
             }
         } else {
-            echo json_encode(['success' => false, 'message' => 'ID de producto no especificado para eliminar.']);
+            echo json_encode(['success' => false, 'message' => 'Método no permitido o ID de producto no especificado para inactivar.']);
         }
         break;
-
     default:
-        echo json_encode(['success' => false, 'message' => 'Acción no válida.']);
+        echo json_encode(['success' => false, 'message' => 'Acción no válida o no especificada.']);
         break;
 }
 

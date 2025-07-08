@@ -14,7 +14,7 @@ require_once '../../../backend/php/conexion/check_role.php';
 </head>
 <body id="dash-board">
     <div class="container-layout">
-        <header>
+        <header class="header">
             <h1>Bienvenido al Dashboard</h1>            
             <h6>¡Bienvenido <?php echo ucfirst(htmlspecialchars($user_role_name)); ?> <?php echo htmlspecialchars($username); ?>!</h6>
         </header>

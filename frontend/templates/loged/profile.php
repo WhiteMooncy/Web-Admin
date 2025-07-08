@@ -5,7 +5,6 @@ require_once '../../../backend/php/conexion/check_role.php';
 if (!$conn) {
     die("Error de conexión: " . mysqli_connect_error());
 }
-
 $usuario_id = $_SESSION['ID_Usuario'] ?? 0;
 $sql = "SELECT username, Correo, Telefono, ID_Rol_FK, nombre, apellido FROM usuarios WHERE ID_Usuario = ?";
 $stmt = $conn->prepare($sql);
@@ -17,8 +16,6 @@ $stmt->execute();
 $stmt->bind_result($username, $correo, $telefono, $id_rol_fk, $nombre, $apellido);
 $stmt->fetch();
 $stmt->close();
-
-// Si tienes una tabla de roles, puedes obtener el nombre del rol así:
 $rol = '';
 if ($id_rol_fk) {
     $sql_rol = "SELECT Nombre_Rol FROM roles WHERE ID_Rol = ?";
@@ -44,7 +41,7 @@ $foto = '../../src/icons/profile.jpg';
   </head>
   <body id="dash-board">
     <div class="container-layout">
-      <header>
+      <header class="header">
         <h2>Mi Perfil</h2>            
       </header>
       <aside>
