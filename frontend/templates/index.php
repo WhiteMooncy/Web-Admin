@@ -39,9 +39,9 @@ require_once '../../backend/php/conexion/db.php';
                     </div>
                     <div class="carousel">
                         <div class="carousel-images">
-                            <img src="../../frontend/src/img/thumb.jpg" alt="img">
-                            <img src="../../frontend/src/img/thumb.jpg" alt="img">
-                            <img src="../../frontend/src/img/thumb.jpg" alt="img">
+                            <img src="../../frontend/src/menu/cafe.jpeg" alt="img">
+                            <img src="../../frontend/src/menu/pandepollo.jpeg" alt="img">
+                            <img src="../../frontend/src/menu/tartademanzana.jpeg" alt="img">
                         </div>
                         <button class="carousel-button prev" onclick="moveSlide(-1)">&#10094;</button>
                         <button class="carousel-button next" onclick="moveSlide(1)">&#10095;</button>
