@@ -4,7 +4,7 @@ if (!isset($_SESSION['carrito']) || !is_array($_SESSION['carrito'])) {
     $_SESSION['carrito'] = [];
 }
 // Asumiendo que 'IS_Usuario' es la variable de sesión que estableces cuando un usuario inicia sesión.
-$user_logged_in = isset($_SESSION['IS_Usuario']); 
+$user_logged_in = isset($_SESSION['IS_Usuario']);
 
 $login_url = '../templates/loged/form_login.php';
 $checkout_url = '../templates/loged/checkout.php'; // Asegúrate de que esta ruta sea correcta
@@ -20,170 +20,9 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
         <style>
-            /* ----------------- Productos ----------------- */
-            .item {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                background-color: #EEE8C9;
-                border-radius: 10px;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                padding: 15px;
-                overflow: hidden;
-            }
-
-            .item img {
-                width: 180px;
-                height: 180px;
-                border-radius: 10px;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                transition: transform 0.3s ease;
-            }
-
-            .item img:hover {
-                transform: scale(1.05);
-            }
-
-            .item-info {
-                flex: 1;
-                margin-right: 15px;
-            }
-
-            .item-info h3 {
-                font-size: 1.5rem;
-                margin: 0 0 10px;
-                color: #333;
-            }
-
-            .item-info p {
-                font-size: 1rem;
-                color: #666;
-                margin: 0 0 10px;
-            }
-
-            .item-info .price {
-                font-size: 1.2rem;
-                font-weight: bold;
-                color: #4A235A;
-            }
-
-            /* ----------------- Carrito ----------------- */
-            .cart-item {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                margin-bottom: 15px;
-            }
-
-            .cart-item-image {
-                width: 50px;
-                height: 50px;
-                border-radius: 5px;
-            }
-
-            .cart-item-details {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-            }
-
-            .cart-item-name {
-                font-size: 14px;
-                font-weight: bold;
-                margin: 0;
-                margin-bottom: 5px;
-            }
-
-            .cart-item-price {
-                font-size: 14px;
-                font-weight: bold;
-                color: #4A235A;
-                margin-left: auto;
-            }
-
-            .quantity-container {
-                display: flex;
-                align-items: center;
-                gap: 5px;
-            }
-
-            .buton-cart-min, .buton-cart-max {
-                color: #333;
-                border: none;
-                padding: 5px 10px;
-                border-radius: 5px;
-                cursor: pointer;
-                font-size: 14px;
-                transition: background-color 0.3s ease, transform 0.2s ease;
-            }
-
-            .buton-cart-min:hover, .buton-cart-max:hover {
-                background-color: #ddd;
-                transform: scale(1.1);
-            }
-
-            #cantidad {
-                font-size: 14px;
-                font-weight: bold;
-            }
-
-            #items-carrito {
-                max-height: none;
-                overflow: visible;
-            }
-
-            .cart-sidebar {
-                position: fixed;
-                top: calc(7% + 10px);
-                right: 0;
-                width: 25%;
-                height: auto;
-                max-height: 80%;
-                background-color: rgba(255, 255, 255, 0.9);
-                box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-                padding: 20px;
-                overflow-y: auto;
-                z-index: 1000;
-                border-radius: 10px 0 0 10px;
-            }
-
-            .main-container {
-                margin-right: 25%;
-            }
-
-            .cart-summary {
-                margin-top: 20px;
-                text-align: center;
-            }
-
-            .cart-continue-btn {
-                display: block;
-                margin: 20px auto;
-                width: 80%;
-                background-color: #22c55e;
-                color: #ffffff;
-                border: none;
-                border-radius: 25px;
-                padding: 10px 20px;
-                font-size: 1.2rem;
-                font-weight: 600;
-                cursor: pointer;
-                transition: background-color 0.3s ease, transform 0.2s ease;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            }
-
-            .cart-continue-btn:hover {
-                background-color: #16a34a;
-                transform: scale(1.05);
-            }
-
-            .cart-continue-btn:active {
-                background-color: #15803d;
-                transform: scale(0.95);
-            }
         </style>
     </head>
-    <body id="index-page">
+    <body id="cart-page" style="margin-top: 50px; width: 100%; height: 100vh; overflow-x: hidden; background-color: #f0f0f0;">
         <header>
             <div class="navbar-brand">
                 <nav class="navbar">
@@ -191,7 +30,6 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
                         <img src="../src/icons/icon_cafe.png" alt="Logo" style="width: 32px; height: 32px; padding: 0; justify-content: center;">
                     </a>
                     <a href="../php/carta.php">Carta</a>
-                    <a href="../templates/Promos.html">Promos</a>
                     <details class="dropdown">
                         <summary>Contáctanos</summary>
                         <div class="dropdown-menu">
@@ -209,106 +47,185 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
                 </nav>
             </div>
         </header>
-        <main>
-            <div class="main-container">
-                <div id="tag-menu" class="container">
-                    <h1>Menú</h1>
-                </div>
-                <div class="menu-columns">
-                    <div class="container">
-                        <div id="tag-especiales" class="container">
-                            <h1>Especiales</h1>
-                        </div>
-                        <div id="plato-semana" class="section">
-                            <div class="menu-grid">
-                                <div class="item">
-                                    <div class="item-info">
-                                        <h3>El Mateo</h3>
-                                        <p>Delicioso pollo cthulu para 4 personas.</p>
-                                        <span class="price">$12.000</span>
-                                        <button class="button" onclick="agregarCarrito('El Mateo', 12000, 'platos', 'elmateo')">Añadir al carrito</button>
+        <main> <div class="content-wrapper"> <div class="main-container">
+                    <div id="tag-menu" class="container">
+                        <h1>Menú</h1>
+                    </div>
+                    <div class="menu-columns">
+                        <div class="container">
+                            <div id="tag-especiales" class="container">
+                                <h1>Café</h1>
+                            </div>
+                            <div id="plato-semana" class="section">
+                                <div class="menu-grid">
+                                    <div class="item">
+                                        <div class="item-info">
+                                            <h3>Expresso</h3>
+                                            <span class="price">$3.400</span>
+                                            <button class="button" onclick="agregarCarrito('Expresso', 3400, 'bebestibles', 'expresso')">Añadir al carrito</button>
+                                        </div>
+                                        <img src="../src/menu/bebestibles/expresso.avif" alt="expresso">
                                     </div>
-                                    <img src="../src/menu/platos/elmateo.png" alt="Plato El Mateo">
+                                    <div class="item">
+                                        <div class="item-info">
+                                            <h3>Capuccino</h3>
+                                            <span class="price">$3.800</span>
+                                            <button class="button" onclick="agregarCarrito('Capuccino', 3800, 'bebestibles', 'capuccino')">Añadir al carrito</button>
+                                        </div>
+                                        <img src="../src/menu/bebestibles/capuccino.avif" alt="capuccino">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="tag-platos" class="container">
-                            <h1>Platos</h1>
-                        </div>
-                        <div id="menu" class="section">
-                            <div class="menu-grid">
-                                <div class="item">
-                                    <div class="item-info">
-                                        <h3>Foreskin Oreos</h3>
-                                        <p>Ricas oreos cubiertas de prepucio.</p>
-                                        <span class="price">$10.000</span>
-                                        <button class="button" onclick="agregarCarrito('foreskin Oreos', 10000, 'platos', 'foreskinoreos')">Añadir al carrito</button>
+
+                            <div id="tag-bebidas" class="container">
+                                <h1>Bebidas</h1>
+                            </div>
+                            <div id="menu" class="section">
+                                <div class="menu-grid">
+                                    <div class="item">
+                                        <div class="item-info">
+                                            <h3>Té Verde</h3>
+                                            <span class="price">$2.500</span>
+                                            <button class="button" onclick="agregarCarrito('Té Verde', 2500, 'bebestibles', 'te_verde')">Añadir al carrito</button>
+                                        </div>
+                                        <img src="../src/menu/bebestibles/te_verde.avif" alt="Té Verde">
                                     </div>
-                                    <img src="../src/menu/platos/foreskinoreos.png" alt="oreos">
+                                    <div class="item">
+                                        <div class="item-info">
+                                            <h3>Jugo Natural</h3>
+                                            <span class="price">$3.000</span>
+                                            <button class="button" onclick="agregarCarrito('Jugo Natural', 3000, 'bebestibles', 'jugo_natural')">Añadir al carrito</button>
+                                        </div>
+                                        <img src="../src/menu/bebestibles/jugo_natural.avif" alt="Jugo Natural">
+                                    </div>
+                                    <div class="item">
+                                        <div class="item-info">
+                                            <h3>Agua</h3>
+                                            <span class="price">$1.500</span>
+                                            <button class="button" onclick="agregarCarrito('Agua', 1500, 'bebestibles', 'agua')">Añadir al carrito</button>
+                                        </div>
+                                        <img src="../src/menu/bebestibles/agua.avif" alt="Agua">
+                                    </div>
+                                    <div class="item">
+                                        <div class="item-info">
+                                            <h3>Agua con Gas</h3>
+                                            <span class="price">$1.800</span>
+                                            <button class="button" onclick="agregarCarrito('Agua con Gas', 1800, 'bebestibles', 'agua_con_gas')">Añadir al carrito</button>
+                                        </div>
+                                        <img src="../src/menu/bebestibles/agua_con_gas.avif" alt="Agua con Gas">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="tag-bebidas" class="container">
-                            <h1>Bebidas</h1>
-                        </div>
-                        <div id="menu" class="section">
-                            <div class="menu-grid">
-                                <div class="item">
-                                    <div class="item-info">
-                                        <h3>Fanta de uva</h3>
-                                        <span class="price">$2.000</span>
-                                        <button class="button" onclick="agregarCarrito('Fanta de uva', 2000, 'bebidas', 'fanta-de-uva')">Añadir al carrito</button>
+
+                            <div id="tag-platos" class="container">
+                                <h1>Comidas</h1>
+                            </div>
+                            <div id="menu" class="section">
+                                <div class="menu-grid">
+                                    <div class="item">
+                                        <div class="item-info">
+                                            <h3>Sandwich de Pollo</h3>
+                                            <span class="price">$5.500</span>
+                                            <button class="button" onclick="agregarCarrito('Sandwich de Pollo', 5500, 'comidas', 'sandwich_pollo')">Añadir al carrito</button>
+                                        </div>
+                                        <img src="../src/menu/comidas/sandwich_pollo.avif" alt="Sandwich de Pollo">
                                     </div>
-                                    <img src="../src/menu/bebidas/fanta-de-uva.png" alt="Fanta de uva">
+                                    <div class="item">
+                                        <div class="item-info">
+                                            <h3>Croissant</h3>
+                                            <span class="price">$2.800</span>
+                                            <button class="button" onclick="agregarCarrito('Croissant', 2800, 'comidas', 'croissant')">Añadir al carrito</button>
+                                        </div>
+                                        <img src="../src/menu/comidas/croissant.avif" alt="Croissant">
+                                    </div>
+                                    <div class="item">
+                                        <div class="item-info">
+                                            <h3>Ensalada César</h3>
+                                            <span class="price">$6.200</span>
+                                            <button class="button" onclick="agregarCarrito('Ensalada César', 6200, 'comidas', 'ensalada_cesar')">Añadir al carrito</button>
+                                        </div>
+                                        <img src="../src/menu/comidas/ensalada_cesar.avif" alt="Ensalada César">
+                                    </div>
+                                    <div class="item">
+                                        <div class="item-info">
+                                            <h3>Empanada</h3>
+                                            <span class="price">$2.000</span>
+                                            <button class="button" onclick="agregarCarrito('Empanada', 2000, 'comidas', 'empanada')">Añadir al carrito</button>
+                                        </div>
+                                        <img src="../src/menu/comidas/empanada.avif" alt="Empanada">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="tag-postres" class="container">
+                                <h1>Postres</h1>
+                            </div>
+                            <div id="menu" class="section">
+                                <div class="menu-grid">
+                                    <div class="item">
+                                        <div class="item-info">
+                                            <h3>Brownie</h3>
+                                            <span class="price">$3.500</span>
+                                            <button class="button" onclick="agregarCarrito('Brownie', 3500, 'postres', 'brownie')">Añadir al carrito</button>
+                                        </div>
+                                        <img src="../src/menu/postres/brownie.avif" alt="Brownie">
+                                    </div>
+                                    <div class="item">
+                                        <div class="item-info">
+                                            <h3>Tarta de Manzana</h3>
+                                            <span class="price">$4.000</span>
+                                            <button class="button" onclick="agregarCarrito('Tarta de Manzana', 4000, 'postres', 'tarta_manzana')">Añadir al carrito</button>
+                                        </div>
+                                        <img src="../src/menu/postres/tarta_manzana.avif" alt="Tarta de Manzana">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <aside class="cart-sidebar" id="cart">
-                        <section>
-                            <h2>Tu Carrito (<span id="cart-count"><?php echo isset($_SESSION['carrito']) && is_array($_SESSION['carrito']) ? count($_SESSION['carrito']) : 0; ?></span>)</h2>
-                            <div class="cart-location">
-                                <label for="location">¿Dónde quieres pedir?</label>
-                                <select id="location">
-                                    <option value="">Selecciona una ubicación</option>
-                                    <option value="local1">Local 1</option>
-                                    <option value="local2">Local 2</option>
-                                </select>
-                            </div>
-                        </section>
-                        <div id="items-carrito">
-                            <?php
-                            $total = 0;
-                            foreach ($_SESSION['carrito'] as $index => $item) {
-                                $imagen = isset($item['imagen']) && !empty($item['imagen']) ? $item['imagen'] : '../src/menu/default-image.png';
-                                $subtotal = $item['precio'] * $item['cantidad'];
-                                $total += $subtotal;
-                                echo "
-                                <div class='container'>
-                                    <div class='cart-item'>
-                                        <img src='{$imagen}' alt='{$item['nombre']}' class='cart-item-image'>
-                                        <div class='cart-item-details'>
-                                            <p class='cart-item-name'>{$item['nombre']}</p>
-                                            <p class='cart-item-price' id='subtotal-{$index}'>\$" . number_format($subtotal) . "</p>
-                                            <div class='quantity-container'>
-                                                <button class='buton-cart-min' onclick='actualizarCantidad($index, \"restar\")'>-</button>
-                                                <span id='cantidad-{$index}'>{$item['cantidad']}</span>
-                                                <button class='buton-cart-max' onclick='actualizarCantidad($index, \"sumar\")'>+</button>
-                                            </div>
+                </div>
+                <aside class="cart-sidebar" id="cart">
+                    <section>
+                        <h2>Tu Carrito (<span id="cart-count"><?php echo isset($_SESSION['carrito']) && is_array($_SESSION['carrito']) ? count($_SESSION['carrito']) : 0; ?></span>)</h2>
+                        <div class="cart-location">
+                            <label for="location">¿Dónde quieres pedir?</label>
+                            <select id="location">
+                                <option value="">Selecciona una ubicación</option>
+                                <option value="local1">Local 1</option>
+                                <option value="local2">Local 2</option>
+                            </select>
+                        </div>
+                    </section>
+                    <div id="items-carrito">
+                        <?php
+                        $total = 0;
+                        foreach ($_SESSION['carrito'] as $index => $item) {
+                            $imagen = isset($item['imagen']) && !empty($item['imagen']) ? $item['imagen'] : '../src/menu/default-image.avif';
+                            $subtotal = $item['precio'] * $item['cantidad'];
+                            $total += $subtotal;
+                            echo "
+                            <div class='container'>
+                                <div class='cart-item'>
+                                    <img src='{$imagen}' alt='{$item['nombre']}' class='cart-item-image'>
+                                    <div class='cart-item-details'>
+                                        <p class='cart-item-name'>{$item['nombre']}</p>
+                                        <p class='cart-item-price' id='subtotal-{$index}'>\$" . number_format($subtotal) . "</p>
+                                        <div class='quantity-container'>
+                                            <button class='buton-cart-min' onclick='actualizarCantidad($index, \"restar\")'>-</button>
+                                            <span id='cantidad-{$index}'>{$item['cantidad']}</span>
+                                            <button class='buton-cart-max' onclick='actualizarCantidad($index, \"sumar\")'>+</button>
                                         </div>
                                     </div>
-                                </div>";
-                            }
-                            ?>
-                        </div>
-                        <div class="cart-summary">
-                            <p>Subtotal: <span class="cart-subtotal">$<?php echo number_format($total); ?></span></p>
-                            <button class="cart-continue-btn" onclick="continuarCompra()">Continuar</button>
-                        </div>
-                    </aside>
-                </div>
-            </div>
-        </main>
+                                </div>
+                            </div>";
+                        }
+                        ?>
+                    </div>
+                    <div class="cart-summary">
+                        <p>Subtotal: <span class="cart-subtotal">$<?php echo number_format($total); ?></span></p>
+                        <button class="cart-continue-btn" onclick="continuarCompra()">Continuar</button>
+                    </div>
+                </aside>
+            </div> </main>
         <footer class="footer" style="padding: 10px; font-size: 12px; text-align: center;">
             <p>Ubicación: Chile <br>Teléfono: +56 9 5891 7375</p>
             <div class="section" style="margin: 10px 0;">
@@ -333,7 +250,7 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
             const LOGIN_URL = '<?php echo $login_url; ?>';
             const CHECKOUT_URL = '<?php echo $checkout_url; ?>';
             function agregarCarrito(nombre, precio, type, img) {
-                var src = '../src/menu/' + type + '/' + img + '.png';
+                var src = '../src/menu/' + type + '/' + img + '.avif';
                 fetch('../../backend/php/funcions/add_cart.php', {
                     method: 'POST',
                     headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -387,10 +304,10 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
                         text: 'Tu carrito está vacío. ¡Añade algunos productos antes de continuar!',
                         confirmButtonText: 'Ok'
                     });
-                    return; 
+                    return;
                 }
-                fetch('../../backend/php/funcions/check_session.php') 
-                    .then(response => response.json()) 
+                fetch('../../backend/php/funcions/check_session.php')
+                    .then(response => response.json())
                     .then(data => {
                         if (data.logged_in) {
                             window.location.href = CHECKOUT_URL;
@@ -406,7 +323,7 @@ $logout_url = '../backend/php/funcions/logout.php'; // Define la URL de cierre d
                                 cancelButtonText: 'Cancelar'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    window.location.href = LOGIN_URL; 
+                                    window.location.href = LOGIN_URL;
                                 }
                             });
                         }

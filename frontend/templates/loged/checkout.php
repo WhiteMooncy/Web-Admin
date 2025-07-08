@@ -130,7 +130,7 @@ $_SESSION['webpay_urls'] = [
                 <a href="../templates/index.php" class="logo">
                     <img src="../../src/icons/icon_cafe.png" alt="Logo" style="width: 32px; height: 32px; padding: 0; justify-content: center;">
                 </a>
-                <a href="../php/carta.php">Carta</a>
+                <a href="../carta.php">Carta</a>
                 <details class="dropdown">
                     <summary>Contactanos</summary>
                     <div class="dropdown-menu">
