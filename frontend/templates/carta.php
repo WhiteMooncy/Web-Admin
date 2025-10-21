@@ -60,7 +60,7 @@ $logout_url = '../backend/php/funcions/logout.php';
                                             <span class="price">$3.400</span>
                                             <button class="button" onclick="agregarCarrito('Expresso', 3400, 'bebestibles', 'expresso')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/cafe.jpeg" alt="expresso">
+                                        <img src="../src/menu/Expresso.jpeg" alt="expresso">
                                     </div>
                                     <div class="item">
                                         <div class="item-info">
@@ -68,7 +68,7 @@ $logout_url = '../backend/php/funcions/logout.php';
                                             <span class="price">$3.800</span>
                                             <button class="button" onclick="agregarCarrito('Capuccino', 3800, 'bebestibles', 'capuccino')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu//capuccino.jpeg" alt="capuccino">
+                                        <img src="../src/menu//Capuccino.jpeg" alt="capuccino">
                                     </div>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@ $logout_url = '../backend/php/funcions/logout.php';
                                             <span class="price">$2.500</span>
                                             <button class="button" onclick="agregarCarrito('Té Verde', 2500, 'bebestibles', 'te_verde')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/TeVerde.jpeg" alt="Té Verde">
+                                        <img src="../src/menu/TéVerde.jpeg" alt="Té Verde">
                                     </div>
                                     <div class="item">
                                         <div class="item-info">
@@ -91,7 +91,7 @@ $logout_url = '../backend/php/funcions/logout.php';
                                             <span class="price">$3.000</span>
                                             <button class="button" onclick="agregarCarrito('Jugo Natural', 3000, 'bebestibles', 'jugo_natural')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/jugodenaranja.jpeg" alt="Jugo Natural">
+                                        <img src="../src/menu/JugoNatural.jpeg" alt="Jugo Natural">
                                     </div>
                                     <div class="item">
                                         <div class="item-info">
@@ -107,7 +107,7 @@ $logout_url = '../backend/php/funcions/logout.php';
                                             <span class="price">$1.800</span>
                                             <button class="button" onclick="agregarCarrito('Agua con Gas', 1800, 'bebestibles', 'agua_con_gas')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/aguagas.jpeg" alt="Agua con Gas">
+                                        <img src="../src/menu/AguaConGas.jpeg" alt="Agua con Gas">
                                     </div>
                                 </div>
                             </div>
@@ -122,7 +122,7 @@ $logout_url = '../backend/php/funcions/logout.php';
                                             <span class="price">$5.500</span>
                                             <button class="button" onclick="agregarCarrito('Sandwich de Pollo', 5500, 'comidas', 'sandwich_pollo')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/pandepollo.jpeg" alt="Sandwich de Pollo">
+                                        <img src="../src/menu/SandwichDePollo.jpeg" alt="Sandwich de Pollo">
                                     </div>
                                     <div class="item">
                                         <div class="item-info">
@@ -130,7 +130,7 @@ $logout_url = '../backend/php/funcions/logout.php';
                                             <span class="price">$2.800</span>
                                             <button class="button" onclick="agregarCarrito('Croissant', 2800, 'comidas', 'croissant')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/croasn.jpeg" alt="Croissant">
+                                        <img src="../src/menu/Croissant.jpeg" alt="Croissant">
                                     </div>
                                     <div class="item">
                                         <div class="item-info">
@@ -138,7 +138,7 @@ $logout_url = '../backend/php/funcions/logout.php';
                                             <span class="price">$6.200</span>
                                             <button class="button" onclick="agregarCarrito('Ensalada César', 6200, 'comidas', 'ensalada_cesar')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/ensaladdacesar.jpeg" alt="Ensalada César">
+                                        <img src="../src/menu/EnsaladaCésar.jpeg" alt="Ensalada César">
                                     </div>
                                     <div class="item">
                                         <div class="item-info">
@@ -146,7 +146,7 @@ $logout_url = '../backend/php/funcions/logout.php';
                                             <span class="price">$2.000</span>
                                             <button class="button" onclick="agregarCarrito('Empanada', 2000, 'comidas', 'empanada')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/empanada.jpeg" alt="Empanada">
+                                        <img src="../src/menu/Empanada.jpeg" alt="Empanada">
                                     </div>
                                 </div>
                             </div>
@@ -161,7 +161,7 @@ $logout_url = '../backend/php/funcions/logout.php';
                                             <span class="price">$3.500</span>
                                             <button class="button" onclick="agregarCarrito('Brownie', 3500, 'postres', 'brownie')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/brownie.jpeg" alt="Brownie">
+                                        <img src="../src/menu/Brownie.jpeg" alt="Brownie">
                                     </div>
                                     <div class="item">
                                         <div class="item-info">
@@ -169,7 +169,7 @@ $logout_url = '../backend/php/funcions/logout.php';
                                             <span class="price">$4.000</span>
                                             <button class="button" onclick="agregarCarrito('Tarta de Manzana', 4000, 'postres', 'tarta_manzana')">Añadir al carrito</button>
                                         </div>
-                                        <img src="../src/menu/tartademanzana.jpeg" alt="Tarta de Manzana">
+                                        <img src="../src/menu/TartaDeManzana.jpeg" alt="Tarta de Manzana">
                                     </div>
                                 </div>
                             </div>
@@ -180,11 +180,11 @@ $logout_url = '../backend/php/funcions/logout.php';
                     <section>
                         <h2>Tu Carrito (<span id="cart-count"><?php echo isset($_SESSION['carrito']) && is_array($_SESSION['carrito']) ? count($_SESSION['carrito']) : 0; ?></span>)</h2>
                         <div class="cart-location">
-                            <label for="location">¿Dónde quieres pedir?</label>
+                            <label for="location">¿Modalidad?</label>
                             <select id="location">
-                                <option value="">Selecciona una ubicación</option>
-                                <option value="local1">Local 1</option>
-                                <option value="local2">Local 2</option>
+                                <option value="">Selecciona una Forma de retiro</option>
+                                <option value="local1">Para llevar</option>
+                                <option value="local2">Para Servir</option>
                             </select>
                         </div>
                     </section>
@@ -218,7 +218,8 @@ $logout_url = '../backend/php/funcions/logout.php';
                         <button class="cart-continue-btn" onclick="continuarCompra()">Continuar</button>
                     </div>
                 </aside>
-            </div> </main>
+            </div> 
+        </main>
         <footer class="footer" style="padding: 10px; font-size: 12px; text-align: center;">
             <p>Ubicación: Chile <br>Teléfono: +56 9 5891 7375</p>
             <div class="section" style="margin: 10px 0;">
@@ -243,7 +244,7 @@ $logout_url = '../backend/php/funcions/logout.php';
             const LOGIN_URL = '<?php echo $login_url; ?>';
             const CHECKOUT_URL = '<?php echo $checkout_url; ?>';
             function agregarCarrito(nombre, precio, type, img) {
-                var src = '../src/menu/' + type + '/' + img + '.jpeg';
+                var src = '../src/menu/' + nombre.replace(/\s/g, '') + '.jpeg';
                 fetch('../../backend/php/funcions/add_cart.php', {
                     method: 'POST',
                     headers: { "Content-Type": "application/x-www-form-urlencoded" },

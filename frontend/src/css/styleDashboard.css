@@ -276,7 +276,7 @@ body#dash-board
         flex-direction: column;
         align-items: stretch;
         width: 220px;
-        height: 430px;
+        height: 470px;
     }
     .sidebar-nav {
         width: 100%;
@@ -655,6 +655,13 @@ body#cart-page
                 color: #666;
             }
 
+#productStock, #productPrice {
+    width: 120px;
+    min-width: 80px;
+    max-width: 200px;
+    display: inline-block;
+}
+
 /* =========================
 RESPONSIVE
             
@@ -691,7 +698,6 @@ RESPONSIVE
                 font-size: 0.95rem;
             }
         }
-
         /* Botones personalizados para cafetería */
         .btn-add-user, .btn-success, .btn-add-product, .btn_cambio_estado {
             background: #0e7af5;
@@ -810,7 +816,7 @@ RESPONSIVE
             background: #f9f6f2;
             color: #7c4a1e;
             box-shadow: 0 1px 4px #0001;
-            width: 100%;
+            width: 90%;
             margin-bottom: 12px;
         }
         /* Personaliza el select y la flecha */
@@ -835,13 +841,11 @@ RESPONSIVE
             background-position: right 16px center;
             cursor: pointer;
         }
-
         .form-select:focus {
             border-color: #388e3c;
             box-shadow: 0 2px 8px #388e3c22;
             background: #fff;
         }
-
         /* Animación de despliegue para el menú de opciones */
         @keyframes selectDropdown {
             from {
@@ -853,7 +857,6 @@ RESPONSIVE
                 transform: scaleY(1);
             }
         }
-
         /* Aplica la animación cuando el select está activo (solo algunos navegadores lo soportan) */
         .form-select:focus option {
             animation: selectDropdown 0.2s ease;
@@ -891,7 +894,7 @@ RESPONSIVE
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid #eee;
-            padding: 26px 32px 16px 32px;
+            padding: 2px 21px 1px 21px;
             border-radius: 18px 18px 0 0;
             background: #f9f6f2;
         }
@@ -919,7 +922,7 @@ RESPONSIVE
             background: #8e0000;
         }
         .modal-body {
-            padding: 24px 32px 8px 32px;
+            padding: 20px 25px 1px 20px;
             display: flex;
             flex-direction: column;
             gap: 0;
@@ -948,7 +951,7 @@ RESPONSIVE
             margin-bottom: 18px;
         }
         .form-control, .form-select {
-            padding: 12px 16px;
+            padding: 12px 10px;
             border: 1.5px solid #e0a96d;
             border-radius: 8px;
             font-size: 1rem;

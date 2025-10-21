@@ -170,14 +170,14 @@ $_SESSION['webpay_urls'] = [
         <div class="section" style="margin: 10px 0;">
             <div>
                 <p class="social-media">
-                    <a href="https://www.facebook.com" target="_blank" aria-label="Facebook">
-                        <img src="../src/icons/facebook-icon.png" alt="Facebook" style="width: 24px; margin: 0 5px;">
+                    <a href="https://www.facebook.com/?locale=es_LA" target="_blank" aria-label="Facebook">
+                        <img src="../../src/icons/facebook-icon.png" alt="Facebook" style="width: 24px; margin: 0 5px;">
                     </a>
                     <a href="https://www.instagram.com" target="_blank" aria-label="Instagram">
-                        <img src="../src/icons/instagram-icon.png" alt="Instagram" style="width: 24px; margin: 0 5px;">
+                        <img src="../../src/icons/instagram-icon.png" alt="Instagram" style="width: 24px; margin: 0 5px;">
                     </a>
                     <a href="https://www.twitter.com" target="_blank" aria-label="Twitter">
-                        <img src="../src/icons/twitter-icon.png" alt="Twitter" style="width: 24px; margin: 0 5px;">
+                        <img src="../../src/icons/twitter-icon.png" alt="Twitter" style="width: 24px; margin: 0 5px;">
                     </a>
                 </p>
             </div>

@@ -409,6 +409,7 @@ if (isset($_GET['status']) && isset($_GET['message'])) {
                     <li><a href="../loged/dashboard.php">Inicio</a></li>
                     <li><a href="../loged/manage_users.php" class="active">Usuarios</a></li>
                     <li><a href="../loged/orders.php">Pedidos</a></li>
+                    <li><a href="../loged/proveedores.php">Proveedores</a></li>
                     <li><a href="../loged/products.php">Productos</a></li>
                     <li><a href="../loged/reports.php">Reportes</a></li>
                     <li><a href="../loged/profile.php">Mi Perfil</a></li>

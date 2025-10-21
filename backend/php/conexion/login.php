@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "SELECT u.ID_Usuario, u.username, u.password_hash, u.ID_Rol_FK, u.activo, r.Nombre_Rol AS rol_nombre
             FROM usuarios u
             JOIN roles r ON u.ID_Rol_FK = r.ID_Rol
-            WHERE u.username = ?";
+            WHERE BINARY u.username = ?";
     $stmt = $conn->prepare($sql);
 
     if ($stmt === false) {

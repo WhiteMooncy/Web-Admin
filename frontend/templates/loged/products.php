@@ -13,6 +13,11 @@ require_once '../../../backend/php/conexion/db.php';
     <script src="../../src/js/logout-confirm.js"></script>
     <title>Cafetería | Administración de Productos</title>
 </head>
+<style>
+    mb-3 {
+        margin-bottom: 1px;
+    }
+</style>
 <body id="dash-board">
     <div class="container-layout">
         <header class="header">
@@ -26,6 +31,7 @@ require_once '../../../backend/php/conexion/db.php';
                     <?php if ($user_role_name === 'admin'): // Funciones solo para administradores ?>
                         <li><a href="../loged/manage_users.php">Usuarios</a></li>
                         <li><a href="../loged/orders.php">Pedidos</a></li>
+                        <li><a href="../loged/proveedores.php">Proveedores</a></li>
                         <li><a href="../loged/products.php" class="active">Productos</a></li>
                         <li><a href="../loged/reports.php">Reportes</a></li>
                         <li><a href="../loged/profile.php">Mi Perfil</a></li>
@@ -33,6 +39,7 @@ require_once '../../../backend/php/conexion/db.php';
 
                     <?php if ($user_role_name === 'empleado'): // Funciones para administradores y empleados ?>
                         <li><a href="../loged/orders.php">Pedidos</a></li>
+                        <li><a href="../loged/proveedores.php">Proveedores</a></li>
                         <li><a href="../loged/products.php" class="active">Productos</a></li>
                         <li><a href="../loged/reports.php">Reportes</a></li>
                         <li><a href="../loged/profile.php">Mi Perfil</a></li>
@@ -104,7 +111,7 @@ require_once '../../../backend/php/conexion/db.php';
     </div>
     <div class="modal" id="productModal">
         <div class="modal-dialog">
-            <form class="modal-content" id="productForm" onsubmit="saveProduct(event)">
+            <form class="modal-content" id="productForm" enctype="multipart/form-data" onsubmit="saveProduct(event)">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalTitle">Agregar Producto</h5>
                     <button type="button" class="btn-close" onclick="closeProductModal()" aria-label="Cerrar">&times;</button>
@@ -117,7 +124,14 @@ require_once '../../../backend/php/conexion/db.php';
                     </div>
                     <div class="mb-3">
                         <label for="productCategory" class="form-label">Categoría</label>
-                        <input type="text" class="form-control" id="productCategory" required>
+                        <select class="form-select" id="productCategory" required>
+                            <option value="">Selecciona una categoría</option>
+                            <option value="Bebidas">Bebidas</option>
+                            <option value="Comidas">Comidas</option>
+                            <option value="Postres">Postres</option>
+                            <option value="Snacks">Snacks</option>
+                            <option value="Otros">Otros</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="productPrice" class="form-label">Precio (CLP)</label>
@@ -133,6 +147,10 @@ require_once '../../../backend/php/conexion/db.php';
                             <option value="Activo">Activo</option>
                             <option value="Inactivo">Inactivo</option>
                         </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productImage" class="form-label">Foto del producto</label>
+                        <input type="file" class="form-control" id="productImage" name="productImage" accept="image/*">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -202,6 +220,12 @@ require_once '../../../backend/php/conexion/db.php';
         // --- Función para guardar (añadir o editar) producto ---
         function saveProduct(event) {
             event.preventDefault();
+            const productName = document.getElementById('productName').value.trim();
+            const nameRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+            if (!nameRegex.test(productName)) {
+                Swal.fire('Error', 'El nombre del producto solo puede contener letras y espacios.', 'error');
+                return;
+            }
             const productId = document.getElementById('productId').value;
             const productData = {
                 id: productId,

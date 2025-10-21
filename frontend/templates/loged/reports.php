@@ -126,6 +126,7 @@ if (isset($conn) && $conn instanceof mysqli) {
                         <?php if ($user_role_name === 'admin'): // Funciones solo para administradores ?>
                             <li><a href="../loged/manage_users.php">Usuarios</a></li>
                             <li><a href="../loged/orders.php">Pedidos</a></li>
+                            <li><a href="../loged/proveedores.php">Proveedores</a></li>
                             <li><a href="../loged/products.php">Productos</a></li>
                             <li><a href="../loged/reports.php" class="active">Reportes</a></li>
                             <li><a href="../loged/profile.php">Mi Perfil</a></li>
@@ -133,6 +134,7 @@ if (isset($conn) && $conn instanceof mysqli) {
                         <?php if ($user_role_name === 'empleado'): // Funciones para administradores y empleados ?>
                             <li><a href="../loged/orders.php">Pedidos</a></li>
                             <li><a href="../loged/products.php">Productos</a></li>
+                            <li><a href="../loged/proveedores.php">Proveedores</a></li>
                             <li><a href="../loged/reports.php" class="active">Reportes</a></li>
                             <li><a href="../loged/profile.php">Mi Perfil</a></li>
                         <?php endif; ?>

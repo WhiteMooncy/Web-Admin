@@ -74,12 +74,14 @@ if (isset($_GET['msg'])) {
                     <?php if ($user_role_name === 'admin'): ?>
                         <li><a href="../loged/manage_users.php">Usuarios</a></li>
                         <li><a href="../loged/orders.php" class="active">Pedidos</a></li>
+                        <li><a href="../loged/proveedores.php">Proveedores</a></li>
                         <li><a href="../loged/products.php">Productos</a></li>
                         <li><a href="../loged/reports.php">Reportes</a></li>
                         <li><a href="../loged/profile.php">Mi Perfil</a></li>
                     <?php endif; ?>
                     <?php if ($user_role_name === 'empleado'): ?>
                         <li><a href="../loged/orders.php" class="active">Pedidos</a></li>
+                        <li><a href="../loged/proveedores.php">Proveedores</a></li>
                         <li><a href="../loged/products.php">Productos</a></li>
                         <li><a href="../loged/reports.php">Reportes</a></li>
                         <li><a href="../loged/profile.php">Mi Perfil</a></li>
