@@ -1,0 +1,70 @@
+# Ignorar archivos de configuración sensibles
+.env
+config/local.php
+
+# Ignorar directorios de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ignorar archivos temporales
+*.tmp
+*.temp
+*.log
+*.cache
+
+# Ignorar directorios de dependencias (si usas Composer)
+/vendor/
+composer.lock
+
+# Ignorar archivos de IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.code-workspace
+
+# Ignorar backups
+*.bak
+*.backup
+*.old
+
+# Ignorar archivos de subida de usuarios (ajustar según necesidad)
+/public/uploads/*
+!/public/uploads/.gitkeep
+
+# Ignorar caché de sesiones
+/sessions/*
+!/sessions/.gitkeep
+
+# Ignorar logs
+/logs/*
+!/logs/.gitkeep
+
+# Ignorar archivos de Windows
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Ignorar archivos de macOS
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Ignorar archivos de Linux
+*~
+.directory
+
+# Node modules (si usas Node.js para build)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Archivos de compilación
+/dist/
+/build/
+
+# Archivos de testing
+/tests/coverage/
+.phpunit.result.cache

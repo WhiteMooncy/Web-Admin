@@ -1,39 +1,178 @@
-# Web-Admin
+# Cafetería Admin - Sistema de Gestión
 
-cliente 
-entra a la pagina principal y tiene acceso a carta y a login dentro de esto puede ver la carta pero a momento de comprar tiene la opcion crear cuenta/inisiar sesion y compra a pedido el cual no nesecita de cuenta pero sin de algunos datos para el retiro
-<-----------Funcionalidades Detalladas----------->
+Sistema web de administración para cafetería desarrollado en PHP, MySQL y JavaScript.
 
-Registro de Usuarios:
-  °Formulario Sencillo: Campos claros para nombre, correo electrónico y contraseña.
-  °Validación Robusta: Asegurar que los campos obligatorios estén completos y en el formato correcto (ej. correo electrónico válido).
-  °Seguridad: Implementar medidas de seguridad para proteger las contraseñas (hash seguro).
-  °Opciones Adicionales (Opcional): Podría incluir roles de usuario (administrador, empleado con permisos limitados, etc.) si es necesario para el futuro.
+## 📋 Características
 
-Visualización de Menús Disponibles:
-  °Presentación Atractiva: Mostrar los menús con imágenes de alta calidad de los productos (si aplica).
-  °Organización Clara: Categorizar los menús (ej. Desayuno, Almuerzo, Cena, Bebidas).
-  °Detalles del Producto: Incluir nombre, descripción, precio y quizás información nutricional o alérgenos.
-  °Búsqueda Rápida: Permitir a los usuarios buscar productos específicos dentro de los menús.
+- ✅ Sistema de autenticación multi-rol (Administrador, Empleado, Cliente)
+- ✅ Gestión de usuarios con roles y permisos
+- ✅ Sistema de pedidos y carrito de compras
+- ✅ Administración de productos y proveedores
+- ✅ Panel de reportes y estadísticas
+- ✅ Interfaz responsive y moderna
+- ✅ Seguridad con sesiones y prepared statements
 
-Registro de Productos:
-  °Formulario Detallado: Campos para nombre del producto, descripción, categoría, precio, costo (si es relevante para la gestión interna), imagen y stock inicial.
-  °Validación de Datos: Asegurar que los precios sean números válidos, que se seleccione una categoría, etc.
-  °Carga de Imágenes Sencilla: Facilitar la carga de imágenes de los productos.
+## 🏗️ Estructura del Proyecto
 
-Gestión de Descuentos:
-  °Creación de Descuentos: Permitir definir el nombre del descuento, el porcentaje o cantidad de descuento, la fecha de inicio y fin (opcional), y a qué productos o categorías aplica.
-  °Visualización de Descuentos Activos: Una sección para ver los descuentos que están actualmente en vigor.
-  °Edición y Eliminación: Posibilidad de modificar o eliminar descuentos existentes.
+```
+Web-Admin/
+├── config/              # Configuración del sistema
+│   ├── config.php       # Configuración general y constantes
+│   └── database.php     # Conexión a la base de datos
+├── includes/            # Archivos compartidos
+│   └── session.php      # Gestión de sesiones
+├── public/              # Directorio público (Document Root)
+│   ├── index.php        # Página de inicio
+│   ├── .htaccess        # Configuración Apache
+│   ├── assets/          # Recursos estáticos
+│   │   ├── css/         # Hojas de estilo
+│   │   ├── js/          # Scripts JavaScript
+│   │   └── images/      # Imágenes e iconos
+│   └── templates/       # Plantillas de vistas
+│       ├── login.php    # Página de login
+│       ├── logout.php   # Cerrar sesión
+│       ├── carta.php    # Menú público
+│       └── admin/       # Área administrativa
+├── src/                 # Código fuente
+│   ├── auth/            # Autenticación
+│   └── controllers/     # Controladores
+├── .env.example         # Ejemplo de variables de entorno
+└── README.md            # Este archivo
+```
 
-Filtro de Productos Amigable:
-  °Múltiples Criterios de Filtrado: Permitir filtrar por categoría, precio (rango), ingredientes (si la información está disponible), alérgenos, o incluso por popularidad (si se recopilan datos de pedidos).
-  °Interfaz Intuitiva: Utilizar checkboxes, sliders o menús desplegables para facilitar la selección de los filtros.
-  °Resultados en Tiempo Real: A medida que el usuario aplica los filtros, los resultados se actualizan dinámicamente.
-  °Opción de Ordenamiento: Permitir ordenar los productos por precio (ascendente/descendente), nombre, o fecha de creación.
+## 🚀 Instalación
 
-Actualización de Stock en Tiempo Real:
-  °Interfaz de Gestión de Stock: Una sección donde se pueda ver el stock actual de cada producto.
-  °Entradas y Salidas de Stock: Funcionalidad para registrar cuando se añade nuevo stock o cuando se vende un producto (esto idealmente estaría conectado a un sistema de pedidos si lo hubiera).
-  °Alertas de Stock Bajo: Configurar alertas para cuando el stock de un producto alcance un nivel mínimo predefinido.
-  °Historial de Movimientos: Mantener un registro de las entradas y salidas de stock para auditoría.
+### Requisitos Previos
+
+- XAMPP (o similar) con:
+  - PHP 7.4 o superior
+  - MySQL 5.7 o superior
+  - Apache con mod_rewrite habilitado
+- Navegador web moderno
+
+### Pasos de Instalación
+
+1. **Clonar o descargar el proyecto**
+   ```bash
+   cd C:\xampp\htdocs\tareas-con-xampp\
+   git clone https://github.com/WhiteMooncy/Web-Admin.git
+   ```
+
+2. **Configurar la base de datos**
+   - Abrir phpMyAdmin: `http://localhost/phpmyadmin`
+   - Crear una nueva base de datos llamada `web-admin`
+   - Importar el archivo SQL (si existe) o crear las tablas necesarias
+
+3. **Configurar variables de entorno** (opcional)
+   ```bash
+   cp .env.example .env
+   # Editar .env con tus credenciales
+   ```
+
+4. **Configurar Apache**
+   - El proyecto está configurado para funcionar en: `http://localhost/tareas-con-xampp/Web-Admin/public/`
+   - Si usas otro directorio, ajusta `$projectFolder` en `config/config.php`
+
+5. **Verificar permisos**
+   - Asegurar que Apache tenga permisos de lectura en todos los directorios
+
+## 🎯 Uso
+
+### Acceder al Sistema
+
+1. Iniciar XAMPP (Apache + MySQL)
+2. Abrir navegador en: `http://localhost/tareas-con-xampp/Web-Admin/public/`
+3. Para acceder al panel administrativo:
+   - URL: `http://localhost/tareas-con-xampp/Web-Admin/public/templates/login.php`
+   - Crear un usuario desde el registro o usar credenciales existentes
+
+### Roles y Permisos
+
+- **Administrador**: Acceso completo al sistema
+  - Gestión de usuarios
+  - Gestión de productos y proveedores
+  - Visualización de reportes y estadísticas
+  - Gestión de pedidos
+
+- **Empleado**: Acceso limitado
+  - Gestión de productos y proveedores
+  - Gestión de pedidos
+  - Visualización de reportes
+
+- **Cliente**: Acceso básico
+  - Realizar pedidos
+  - Ver historial de pedidos
+  - Actualizar perfil
+
+## 🔧 Configuración
+
+### Editar Configuración General
+
+Archivo: `config/config.php`
+
+```php
+// Ajustar según tu instalación
+$projectFolder = '/tareas-con-xampp/Web-Admin/public';
+```
+
+### Configurar Base de Datos
+
+Archivo: `config/database.php`
+
+```php
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'web-admin');
+```
+
+O usar variables de entorno en `.env`:
+```
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=
+DB_NAME=web-admin
+```
+
+## 📊 Base de Datos
+
+### Tablas Principales
+
+- `usuarios` - Información de usuarios del sistema
+- `roles` - Definición de roles (Administrador, Empleado, Cliente)
+- `productos` - Catálogo de productos
+- `pedidos` - Registro de pedidos
+- `proveedores` - Información de proveedores
+
+## 🛡️ Seguridad
+
+- ✅ Contraseñas hasheadas con `password_hash()` (bcrypt)
+- ✅ Prepared statements para prevenir SQL injection
+- ✅ Validación de sesiones
+- ✅ Protección contra XSS con `htmlspecialchars()`
+- ✅ Headers de seguridad configurados en `.htaccess`
+- ✅ Archivos sensibles protegidos
+
+## 🐛 Solución de Problemas
+
+### Error: "Conexión a base de datos fallida"
+- Verificar que MySQL esté corriendo en XAMPP
+- Comprobar credenciales en `config/database.php`
+- Verificar que la base de datos exista
+
+### Error 404 en assets
+- Verificar que las rutas en `config/config.php` sean correctas
+- Comprobar que `mod_rewrite` esté habilitado en Apache
+
+### Sesiones no funcionan
+- Verificar permisos en el directorio de sesiones de PHP
+- Comprobar que las cookies estén habilitadas en el navegador
+
+## 👤 Autor
+
+**WhiteMooncy**
+- GitHub: [@WhiteMooncy](https://github.com/WhiteMooncy)
+
+## 🔄 Versión
+
+**v2.0.0** - Reorganización completa del proyecto con arquitectura mejorada
