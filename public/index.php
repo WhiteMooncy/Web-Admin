@@ -3,7 +3,7 @@
  * Página de Inicio - Cafetería Aconcagua
  */
 
-define('APP_ROOT', __DIR__);
+define('APP_ROOT', dirname(__DIR__));
 require_once APP_ROOT . '/config/config.php';
 require_once CONFIG_PATH . '/database.php';
 require_once INCLUDES_PATH . '/session.php';
